@@ -3,18 +3,18 @@ Test automation for https://demoqa.com using Selenium WebDriver in C#.
 
 # Original Author:
 
-This project was created by me, Matthew Comeaux. You can view my github at: https://github.com/matt-comeaux .
+This project was created by me, Matthew Comeaux. You can view my github at: https://github.com/matt-comeaux . <br/>
 My LinkedIn is https://www.linkedin.com/in/matthew-comeaux
 
 # Prerequisites
-* Visual Studio 2019 
+* Visual Studio 2019 <br/>
 * Chrome Browser v90.0.4430.93. 
 
 # Installation
 
-Step 1: Download all project files.
-Step 2: Store project files in the same folder in the directory of your choosing.
-Step 3: Open the file "AutomatedUITest_DemoQA.sln" with Visual Studio 2019.
+Step 1: Download all project files. <br/>
+Step 2: Store project files in the same folder in the directory of your choosing. <br/>
+Step 3: Open the file "AutomatedUITest_DemoQA.sln" with Visual Studio 2019. <br/>
 
 That's it! All the packages needed are included in the download.
 
