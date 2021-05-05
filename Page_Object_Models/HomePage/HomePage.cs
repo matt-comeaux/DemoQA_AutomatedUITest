@@ -37,8 +37,8 @@ namespace TestAutomation_DemoQA.Page_Object_Models.HomePage
     class HomePage
     {
         private readonly IWebDriver Driver;
-        private readonly string url = "Practice Form";
-        private readonly string mainHeader = "ToolsQA";
+        private readonly string url = "https://demoqa.com/";
+        private readonly string pageTitle = "ToolsQA";
 
         public HomePage(IWebDriver driver)
         {
@@ -52,7 +52,7 @@ namespace TestAutomation_DemoQA.Page_Object_Models.HomePage
 
         public void EnsurePageLoaded()
         {
-            bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
+            bool isLoaded = (Driver.Url == url) && (Driver.Title == pageTitle);
 
             if (!isLoaded)
             {
