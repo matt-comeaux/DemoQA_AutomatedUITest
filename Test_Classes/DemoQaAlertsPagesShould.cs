@@ -50,5 +50,70 @@ namespace TestAutomation_DemoQA
                 alertsPage.LoadPage();
             }
         }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToAlertsPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsMainPage = new Alerts_MainPage(driver);
+                alertsMainPage.LoadPage();
+                AlertsPage alertsPage = alertsMainPage.NavigateToAlertsPage_SideMenu();
+                alertsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToBrowserWindowsPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsMainPage = new Alerts_MainPage(driver);
+                alertsMainPage.LoadPage();
+                BrowserWindowsPage browserWindowsPage = alertsMainPage.NavigateToBrowserWindowsPage_SideMenu();
+                browserWindowsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToFramesPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsMainPage = new Alerts_MainPage(driver);
+                alertsMainPage.LoadPage();
+                FramesPage framesPage = alertsMainPage.NavigateToFramesPage_SideMenu();
+                framesPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToModalDialogPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsMainPage = new Alerts_MainPage(driver);
+                alertsMainPage.LoadPage();
+                ModalDialogsPage modalDialogsPage = alertsMainPage.NavigateToModalDialogsPage_SideMenu();
+                modalDialogsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToNestedFramesPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsMainPage = new Alerts_MainPage(driver);
+                alertsMainPage.LoadPage();
+                NestedFramesPage nestedFramesPage = alertsMainPage.NavigateToNestedFramesPage_SideMenu();
+                nestedFramesPage.EnsurePageLoaded();
+            }
+        }
     }
 }

@@ -56,8 +56,55 @@ namespace TestAutomation_DemoQA.Page_Object_Models.Interactions
 
             if (!isLoaded)
             {
-                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The main header is: \r\n '{Driver.FindElement(By.ClassName("main-header")).Text}'");
             }
         }
+
+        public DraggablePage NavigateToDraggablePage_SideMenu()
+        {
+            IWebElement draggableMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][5]/div/ul/li[5]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", draggableMenuItem);
+
+            return new DraggablePage(Driver);
+        }
+        public DroppablePage NavigateToDroppablePage_SideMenu()
+        {
+            IWebElement droppableMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][5]/div/ul/li[4]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", droppableMenuItem);
+
+            return new DroppablePage(Driver);
+        }
+        public ResizablePage NavigateToResizablePage_SideMenu()
+        {
+            IWebElement resizableMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][5]/div/ul/li[3]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", resizableMenuItem);
+
+            return new ResizablePage(Driver);
+        }
+        public SelectablePage NavigateToSelectablePage_SideMenu()
+        {
+            IWebElement selectableMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][5]/div/ul/li[2]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", selectableMenuItem);
+
+            return new SelectablePage(Driver);
+        }
+        public SortablePage NavigateToSortablePage_SideMenu()
+        {
+            IWebElement sortableMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][5]/div/ul/li[1]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", sortableMenuItem);
+
+            return new SortablePage(Driver);
+        }
+
     }
 }

@@ -56,8 +56,18 @@ namespace TestAutomation_DemoQA.Page_Object_Models.Forms
 
             if (!isLoaded)
             {
-                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The main header is: \r\n '{Driver.FindElement(By.ClassName("main-header")).Text}'");
             }
+        }
+
+        public PracticeFormsPage NavigateToPracticeFormsPage_SideMenu()
+        {
+            IWebElement practiceFormsMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][2]/div/ul/li[1]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", practiceFormsMenuItem);
+
+            return new PracticeFormsPage(Driver);
         }
     }
 }

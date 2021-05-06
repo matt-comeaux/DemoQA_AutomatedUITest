@@ -34,6 +34,8 @@ using OpenQA.Selenium;
 
 namespace TestAutomation_DemoQA.Page_Object_Models.Elements
 {
+
+    // Using Javascript to click links in order to avoid implicit waits from scrolling menu items into view.
     class Elements_MainPage
     {
         private readonly IWebDriver Driver;
@@ -56,8 +58,97 @@ namespace TestAutomation_DemoQA.Page_Object_Models.Elements
 
             if (!isLoaded)
             {
-                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The main header is: \r\n '{Driver.FindElement(By.ClassName("main-header")).Text}'");
             }
+        }
+
+        public BrokenLinksPage NavigateToBrokenLinksPage_SideMenu()
+        {
+            IWebElement brokenLinksMenuItem = 
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[7]"));
+            
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", brokenLinksMenuItem);
+            
+            return new BrokenLinksPage(Driver);
+        }
+
+        public ButtonsPage NavigateToButtonsPage_SideMenu()
+        {
+            IWebElement buttonsMenuItem = 
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[5]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", buttonsMenuItem);
+            
+            return new ButtonsPage(Driver);
+        }
+
+        public CheckBoxPage NavigateToCheckBoxPage_SideMenu()
+        {
+            IWebElement checkBoxMenuItem = Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[2]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", checkBoxMenuItem);
+
+            return new CheckBoxPage(Driver);
+        }
+
+        public DynamicPropertiesPage NavigateToDynamicPropertiesPage_SideMenu()
+        {
+            IWebElement dynamicPropertiesMenuItem = 
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[9]"));
+            
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", dynamicPropertiesMenuItem);
+            
+            return new DynamicPropertiesPage(Driver);
+        }
+
+        public LinksPage NavigateToLinksPage_SideMenu()
+        {
+            IWebElement linksMenuItem = 
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[6]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", linksMenuItem);
+
+            return new LinksPage(Driver);
+        }
+
+        public RadioButtonPage NavigateToRadioButtonPage_SideMenu()
+        {
+            IWebElement radioButtonMenuItem = 
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[3]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", radioButtonMenuItem);
+
+            return new RadioButtonPage(Driver);
+        }
+
+        public TextBoxPage NavigateToTextBoxPage_SideMenu()
+        {
+            IWebElement textBoxMenuItem = 
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[1]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", textBoxMenuItem);
+            
+            return new TextBoxPage(Driver);
+        }
+
+        public UploadDownloadPage NavigateToUploadDownloadPage_SideMenu()
+        {
+            IWebElement uploadDownloadMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[8]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", uploadDownloadMenuItem);
+
+            return new UploadDownloadPage(Driver);
+        }
+
+        public WebTablesPage NavigateToWebTablesPage_SideMenu()
+        {
+            IWebElement webTablesMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][1]/div/ul/li[4]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", webTablesMenuItem);
+
+            return new WebTablesPage(Driver);
         }
     }
 }

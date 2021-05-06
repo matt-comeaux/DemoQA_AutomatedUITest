@@ -46,8 +46,73 @@ namespace TestAutomation_DemoQA
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                var interactionsPage = new Interactions_MainPage(driver);
-                interactionsPage.LoadPage();
+                var interactionsMainPage = new Interactions_MainPage(driver);
+                interactionsMainPage.LoadPage();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToDraggablePage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var interactionsMainPage = new Interactions_MainPage(driver);
+                interactionsMainPage.LoadPage();
+                DraggablePage draggablePage = interactionsMainPage.NavigateToDraggablePage_SideMenu();
+                draggablePage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToDroppablePage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var interactionsMainPage = new Interactions_MainPage(driver);
+                interactionsMainPage.LoadPage();
+                DroppablePage droppablePage = interactionsMainPage.NavigateToDroppablePage_SideMenu();
+                droppablePage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToResizablePage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var interactionsMainPage = new Interactions_MainPage(driver);
+                interactionsMainPage.LoadPage();
+                ResizablePage resizablePage = interactionsMainPage.NavigateToResizablePage_SideMenu();
+                resizablePage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToSelectablePage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var interactionsMainPage = new Interactions_MainPage(driver);
+                interactionsMainPage.LoadPage();
+                SelectablePage selectablePage = interactionsMainPage.NavigateToSelectablePage_SideMenu();
+                selectablePage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToSortablePage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var interactionsMainPage = new Interactions_MainPage(driver);
+                interactionsMainPage.LoadPage();
+                SortablePage sortablePage = interactionsMainPage.NavigateToSortablePage_SideMenu();
+                sortablePage.EnsurePageLoaded();
             }
         }
     }

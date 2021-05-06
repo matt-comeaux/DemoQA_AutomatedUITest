@@ -31,6 +31,11 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using TestAutomation_DemoQA.Page_Object_Models.Alerts_Frames_Windows;
+using TestAutomation_DemoQA.Page_Object_Models.Elements;
+using TestAutomation_DemoQA.Page_Object_Models.Forms;
+using TestAutomation_DemoQA.Page_Object_Models.Interactions;
+using TestAutomation_DemoQA.Page_Object_Models.Widgets;
 
 namespace TestAutomation_DemoQA.Page_Object_Models.HomePage
 {
@@ -44,6 +49,7 @@ namespace TestAutomation_DemoQA.Page_Object_Models.HomePage
         {
             this.Driver = driver;
         }
+
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
@@ -56,8 +62,40 @@ namespace TestAutomation_DemoQA.Page_Object_Models.HomePage
 
             if (!isLoaded)
             {
-                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page title is: \r\n '{Driver.Title}'");
             }
         }
+
+        public Elements_MainPage LoadElementsPageFromClick()
+        {
+            Driver.FindElement(By.XPath("//div[contains(@class,'category-cards')]/div[1]")).Click();
+            return new Elements_MainPage(Driver);
+        }
+
+        public Forms_MainPage LoadFormsPageFromClick()
+        {
+            Driver.FindElement(By.XPath("//div[contains(@class,'category-cards')]/div[2]")).Click();
+            return new Forms_MainPage(Driver);
+        }
+
+        public Alerts_MainPage LoadAlertsPageFromClick()
+        {
+            Driver.FindElement(By.XPath("//div[contains(@class,'category-cards')]/div[3]")).Click();
+            return new Alerts_MainPage(Driver);
+        }
+
+        public Widgets_MainPage LoadWidgetsPageFromClick()
+        {
+            Driver.FindElement(By.XPath("//div[contains(@class,'category-cards')]/div[4]")).Click();
+            return new Widgets_MainPage(Driver);
+        }
+
+        public Interactions_MainPage LoadInteractionsPageFromClick()
+        {
+            Driver.FindElement(By.XPath("//div[contains(@class,'category-cards')]/div[5]")).Click();
+            return new Interactions_MainPage(Driver);
+        }
+
+
     }
 }

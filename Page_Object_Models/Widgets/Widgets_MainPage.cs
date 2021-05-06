@@ -56,8 +56,98 @@ namespace TestAutomation_DemoQA.Page_Object_Models.Widgets
 
             if (!isLoaded)
             {
-                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The main header is: \r\n '{Driver.FindElement(By.ClassName("main-header")).Text}'");
             }
+        }
+
+        public AccordianPage NavigateToAccordianPage_SideMenu()
+        {
+            IWebElement accordianMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[1]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", accordianMenuItem);
+
+            return new AccordianPage(Driver);
+        }
+
+        public AutoCompletePage NavigateToAutoCompletePage_SideMenu()
+        {
+            IWebElement autoCompleteMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[2]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", autoCompleteMenuItem);
+
+            return new AutoCompletePage(Driver);
+        }
+
+        public DatePickerPage NavigateToDatePickerPage_SideMenu()
+        {
+            IWebElement datePickerMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[3]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", datePickerMenuItem);
+
+            return new DatePickerPage(Driver);
+        }
+
+        public MenuPage NavigateToMenuPage_SideMenu()
+        {
+            IWebElement menuPageMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[8]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", menuPageMenuItem);
+
+            return new MenuPage(Driver);
+        }
+
+        public ProgressBarPage NavigateToProgressBarPage_SideMenu()
+        {
+            IWebElement progressBarMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[5]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", progressBarMenuItem);
+
+            return new ProgressBarPage(Driver);
+        }
+
+        public SelectMenuPage NavigateToSelectMenuPage_SideMenu()
+        {
+            IWebElement selectMenuMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[9]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", selectMenuMenuItem);
+
+            return new SelectMenuPage(Driver);
+        }
+
+        public SliderPage NavigateToSliderPage_SideMenu()
+        {
+            IWebElement sliderMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[4]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", sliderMenuItem);
+
+            return new SliderPage(Driver);
+        }
+
+        public TabsPage NavigateToTabsPage_SideMenu()
+        {
+            IWebElement tabsMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[6]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", tabsMenuItem);
+
+            return new TabsPage(Driver);
+        }
+
+        public ToolTipsPage NavigateToToolTipsPage_SideMenu()
+        {
+            IWebElement toolTipsMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][4]/div/ul/li[7]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", toolTipsMenuItem);
+
+            return new ToolTipsPage(Driver);
         }
     }
 }

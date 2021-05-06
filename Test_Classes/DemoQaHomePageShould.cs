@@ -32,8 +32,13 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support;
+using OpenQA.Selenium.Support.UI;
+using TestAutomation_DemoQA.Page_Object_Models.Alerts_Frames_Windows;
+using TestAutomation_DemoQA.Page_Object_Models.Elements;
+using TestAutomation_DemoQA.Page_Object_Models.Forms;
 using TestAutomation_DemoQA.Page_Object_Models.HomePage;
+using TestAutomation_DemoQA.Page_Object_Models.Interactions;
+using TestAutomation_DemoQA.Page_Object_Models.Widgets;
 using Xunit;
 
 namespace TestAutomation_DemoQA
@@ -50,5 +55,71 @@ namespace TestAutomation_DemoQA
                 homePage.LoadPage();
             }
         }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToElementsPage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var homePage = new HomePage(driver);
+                homePage.LoadPage();
+                Elements_MainPage elementsPage = homePage.LoadElementsPageFromClick();
+                elementsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToFormsPage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var homePage = new HomePage(driver);
+                homePage.LoadPage();
+                Forms_MainPage formsPage = homePage.LoadFormsPageFromClick();
+                formsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToAlertsPage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var homePage = new HomePage(driver);
+                homePage.LoadPage();
+                Alerts_MainPage alertsPage = homePage.LoadAlertsPageFromClick();
+                alertsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToWidgetsPage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var homePage = new HomePage(driver);
+                homePage.LoadPage();
+                Widgets_MainPage widgetsPage = homePage.LoadWidgetsPageFromClick();
+                widgetsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToInteractionsPage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var homePage = new HomePage(driver);
+                homePage.LoadPage();
+                Interactions_MainPage interactionsPage = homePage.LoadInteractionsPageFromClick();
+                interactionsPage.EnsurePageLoaded();
+            }
+        }
+
     }
 }

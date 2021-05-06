@@ -40,6 +40,7 @@ namespace TestAutomation_DemoQA
 {
     public class DemoQaElementsPagesShould
     {
+
         [Fact]
         [Trait("Category", "Smoke")]
         public void Load()
@@ -50,5 +51,123 @@ namespace TestAutomation_DemoQA
                 elementsPage.LoadPage();
             }
         }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToBrokenLinksPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                BrokenLinksPage brokenLinksPage = elementsPage.NavigateToBrokenLinksPage_SideMenu();
+                brokenLinksPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToButtonsPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                ButtonsPage buttonsPage = elementsPage.NavigateToButtonsPage_SideMenu();
+                buttonsPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToCheckBoxPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                CheckBoxPage checkBoxPage = elementsPage.NavigateToCheckBoxPage_SideMenu();
+                checkBoxPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToDynamicPropertiesPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                DynamicPropertiesPage dynamicPropertiesPage = elementsPage.NavigateToDynamicPropertiesPage_SideMenu();
+                dynamicPropertiesPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToLinksPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                LinksPage linksPage = elementsPage.NavigateToLinksPage_SideMenu();
+                linksPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToRadioButtonPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                RadioButtonPage radioButtonPage = elementsPage.NavigateToRadioButtonPage_SideMenu();
+                radioButtonPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToTextBoxPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                TextBoxPage textBoxPage = elementsPage.NavigateToTextBoxPage_SideMenu();
+                textBoxPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToUploadDownloadPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                UploadDownloadPage uploadDownloadPage = elementsPage.NavigateToUploadDownloadPage_SideMenu();
+                uploadDownloadPage.EnsurePageLoaded();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Smoke")]
+        public void NavigateToWebTablesPage_SideMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var elementsPage = new Elements_MainPage(driver);
+                elementsPage.LoadPage();
+                WebTablesPage webTablesPage = elementsPage.NavigateToWebTablesPage_SideMenu();
+                webTablesPage.EnsurePageLoaded();
+            }
+        }
+
     }
 }

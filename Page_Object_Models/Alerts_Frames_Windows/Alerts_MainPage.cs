@@ -56,8 +56,59 @@ namespace TestAutomation_DemoQA.Page_Object_Models.Alerts_Frames_Windows
 
             if (!isLoaded)
             {
-                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The main header is: \r\n '{Driver.FindElement(By.ClassName("main-header")).Text}'");
             }
         }
+
+        public AlertsPage NavigateToAlertsPage_SideMenu()
+        {
+            IWebElement alertsMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][3]/div/ul/li[2]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", alertsMenuItem);
+
+            return new AlertsPage(Driver);
+        }
+
+        public BrowserWindowsPage NavigateToBrowserWindowsPage_SideMenu()
+        {
+            IWebElement browserWindowsMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][3]/div/ul/li[1]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", browserWindowsMenuItem);
+
+            return new BrowserWindowsPage(Driver);
+        }
+
+        public FramesPage NavigateToFramesPage_SideMenu()
+        {
+            IWebElement framesMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][3]/div/ul/li[3]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", framesMenuItem);
+
+            return new FramesPage(Driver);
+        }
+
+        public ModalDialogsPage NavigateToModalDialogsPage_SideMenu()
+        {
+            IWebElement modalDialogsMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][3]/div/ul/li[5]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", modalDialogsMenuItem);
+
+            return new ModalDialogsPage(Driver);
+        }
+
+        public NestedFramesPage NavigateToNestedFramesPage_SideMenu()
+        {
+            IWebElement nestedFramesMenuItem =
+                Driver.FindElement(By.XPath("//div[contains(@class, 'element-group')][3]/div/ul/li[4]"));
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click()", nestedFramesMenuItem);
+
+            return new NestedFramesPage(Driver);
+        }
+
     }
 }

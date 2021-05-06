@@ -1,6 +1,6 @@
 ﻿/*
-Name: DemoQaFormsPagesShould.cs
-Purpose: Contains the test class for the form pages on www.demoqa.com. This includes testing for all form pages under the forms section. 
+Name: WebTables.cs
+Purpose: Contains the Page Object Model for the web tables page on www.demoqa.com. 
 Author: Matthew Comeaux. Github: https://www.github.com/matt-comeaux Linkedin: https://www.linkedin.com/in/matthew-comeaux
 Created On: 5/3/2021
 First Uploaded To Github On: 5/4/2021
@@ -31,37 +31,34 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support;
-using TestAutomation_DemoQA.Page_Object_Models.Forms;
-using Xunit;
 
-namespace TestAutomation_DemoQA
+namespace TestAutomation_DemoQA.Page_Object_Models.Elements
 {
-    public class DemoQaFormsPagesShould
+    class WebTablesPage
     {
-        [Fact]
-        [Trait("Category", "Smoke")]
-        public void Load()
+        private readonly IWebDriver Driver;
+        private readonly string url = "https://demoqa.com/webtables";
+        private readonly string mainHeader = "Web Tables";
+
+        public WebTablesPage(IWebDriver driver)
         {
-            using (IWebDriver driver = new ChromeDriver())
+            this.Driver = driver;
+        }
+        public void LoadPage()
+        {
+            Driver.Navigate().GoToUrl(url);
+            EnsurePageLoaded();
+        }
+
+        public void EnsurePageLoaded()
+        {
+            bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
+
+            if (!isLoaded)
             {
-                var formsPage = new Forms_MainPage(driver);
-                formsPage.LoadPage();
+                throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
         }
 
-        [Fact]
-        [Trait("Category", "Smoke")]
-        public void NavigateToPracticeFormsPage_SideMenu()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                var formsMainPage = new Forms_MainPage(driver);
-                formsMainPage.LoadPage();
-                PracticeFormsPage practiceFormsPage = formsMainPage.NavigateToPracticeFormsPage_SideMenu();
-                practiceFormsPage.EnsurePageLoaded();
-            }
-        }
     }
 }
