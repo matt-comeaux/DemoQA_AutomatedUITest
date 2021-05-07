@@ -32,7 +32,7 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 
-namespace TestAutomation_DemoQA.Page_Object_Models.Forms
+namespace AutomatedUITest_DemoQA.Page_Object_Models.Forms
 {
     class PracticeFormsPage
     {

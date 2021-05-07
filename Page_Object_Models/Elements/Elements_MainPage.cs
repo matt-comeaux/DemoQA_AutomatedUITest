@@ -32,7 +32,7 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 
-namespace TestAutomation_DemoQA.Page_Object_Models.Elements
+namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
 
     // Using Javascript to click links in order to avoid implicit waits from scrolling menu items into view.

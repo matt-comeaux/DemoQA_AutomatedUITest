@@ -31,13 +31,13 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
-using TestAutomation_DemoQA.Page_Object_Models.Alerts_Frames_Windows;
-using TestAutomation_DemoQA.Page_Object_Models.Elements;
-using TestAutomation_DemoQA.Page_Object_Models.Forms;
-using TestAutomation_DemoQA.Page_Object_Models.Interactions;
-using TestAutomation_DemoQA.Page_Object_Models.Widgets;
+using AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows;
+using AutomatedUITest_DemoQA.Page_Object_Models.Elements;
+using AutomatedUITest_DemoQA.Page_Object_Models.Forms;
+using AutomatedUITest_DemoQA.Page_Object_Models.Interactions;
+using AutomatedUITest_DemoQA.Page_Object_Models.Widgets;
 
-namespace TestAutomation_DemoQA.Page_Object_Models.HomePage
+namespace AutomatedUITest_DemoQA.Page_Object_Models.HomePage
 {
     class HomePage
     {

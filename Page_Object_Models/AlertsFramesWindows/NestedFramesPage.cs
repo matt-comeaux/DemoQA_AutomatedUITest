@@ -1,6 +1,6 @@
 ﻿/*
-Name: DatePicker.cs
-Purpose: Contains the Page Object Model for the date picker page on www.demoqa.com. 
+Name: NestedFrames.cs
+Purpose: Contains the Page Object Model for the nested frames page on www.demoqa.com. 
 Author: Matthew Comeaux. Github: https://www.github.com/matt-comeaux Linkedin: https://www.linkedin.com/in/matthew-comeaux
 Created On: 5/3/2021
 First Uploaded To Github On: 5/4/2021
@@ -32,15 +32,15 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 
-namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
+namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
-    class DatePickerPage
+    class NestedFramesPage
     {
         private readonly IWebDriver Driver;
-        private readonly string url = "https://demoqa.com/date-picker";
-        private readonly string mainHeader = "Date Picker";
+        private readonly string url = "https://demoqa.com/nestedframes";
+        private readonly string mainHeader = "Nested Frames";
 
-        public DatePickerPage(IWebDriver driver)
+        public NestedFramesPage(IWebDriver driver)
         {
             this.Driver = driver;
         }

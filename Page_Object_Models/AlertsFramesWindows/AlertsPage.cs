@@ -1,6 +1,6 @@
 ﻿/*
-Name: DatePicker.cs
-Purpose: Contains the Page Object Model for the date picker page on www.demoqa.com. 
+Name: Alerts.cs
+Purpose: Contains the Page Object Model for the alerts page on www.demoqa.com. 
 Author: Matthew Comeaux. Github: https://www.github.com/matt-comeaux Linkedin: https://www.linkedin.com/in/matthew-comeaux
 Created On: 5/3/2021
 First Uploaded To Github On: 5/4/2021
@@ -32,18 +32,19 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 
-namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
+namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
-    class DatePickerPage
+    class AlertsPage
     {
         private readonly IWebDriver Driver;
-        private readonly string url = "https://demoqa.com/date-picker";
-        private readonly string mainHeader = "Date Picker";
+        private readonly string url = "https://demoqa.com/alerts";
+        private readonly string mainHeader = "Alerts";
 
-        public DatePickerPage(IWebDriver driver)
+        public AlertsPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
@@ -53,7 +54,7 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
-
+            
             if (!isLoaded)
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");

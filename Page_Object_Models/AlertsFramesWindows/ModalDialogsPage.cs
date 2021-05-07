@@ -1,6 +1,6 @@
 ﻿/*
-Name: DatePicker.cs
-Purpose: Contains the Page Object Model for the date picker page on www.demoqa.com. 
+Name: ModalDialogs.cs
+Purpose: Contains the Page Object Model for the modal dialogs page on www.demoqa.com. 
 Author: Matthew Comeaux. Github: https://www.github.com/matt-comeaux Linkedin: https://www.linkedin.com/in/matthew-comeaux
 Created On: 5/3/2021
 First Uploaded To Github On: 5/4/2021
@@ -32,15 +32,15 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 
-namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
+namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
-    class DatePickerPage
+    class ModalDialogsPage
     {
         private readonly IWebDriver Driver;
-        private readonly string url = "https://demoqa.com/date-picker";
-        private readonly string mainHeader = "Date Picker";
+        private readonly string url = "https://demoqa.com/modal-dialogs";
+        private readonly string mainHeader = "Modal Dialogs";
 
-        public DatePickerPage(IWebDriver driver)
+        public ModalDialogsPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
