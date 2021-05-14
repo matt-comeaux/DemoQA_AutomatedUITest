@@ -36,7 +36,7 @@ using OpenQA.Selenium.Support;
 using AutomatedUITest_DemoQA.Page_Object_Models.Elements;
 using Xunit;
 
-namespace AutomatedUITest_DemoQA
+namespace AutomatedUITest_DemoQA.Test_Classes.MainPages_Test
 {
     public class DemoQA_ElementsMainPageShould
     {

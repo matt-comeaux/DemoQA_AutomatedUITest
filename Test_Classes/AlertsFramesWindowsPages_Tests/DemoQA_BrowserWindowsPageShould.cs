@@ -38,7 +38,41 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.AlertsFramesWindowsPages_Tests
 {
-    class DemoQA_BrowserWindowsPageShould
+    public class DemoQA_BrowserWindowsPageShould
     {
+        
+        [Fact]
+        public void CreateNewTabOnButtonClick()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var browserWindowPage = new BrowserWindowsPage(driver);
+                browserWindowPage.LoadPage();
+                browserWindowPage.ClickButton_NewTab();
+            }
+        }
+
+        [Fact]
+        public void CreateNewWindowOnButtonClick()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var browserWindowPage = new BrowserWindowsPage(driver);
+                browserWindowPage.LoadPage();
+                browserWindowPage.ClickButton_NewWindow();
+            }
+        }
+
+        [Fact]
+        public void CreateNewWindowMessageOnButtonClick()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var browserWindowPage = new BrowserWindowsPage(driver);
+                browserWindowPage.LoadPage();
+                browserWindowPage.ClickButton_NewWindowMessage();
+            }
+        }
+        
     }
 }

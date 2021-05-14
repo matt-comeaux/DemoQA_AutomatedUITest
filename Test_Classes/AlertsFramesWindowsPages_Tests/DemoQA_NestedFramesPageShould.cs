@@ -38,7 +38,28 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.AlertsFramesWindowsPages_Tests
 {
-    class DemoQA_NestedFramesPageShould
+    public class DemoQA_NestedFramesPageShould
     {
+        [Fact]
+        public void LoadParentFrame()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var nestedFramesPage = new NestedFramesPage(driver);
+                nestedFramesPage.LoadPage();
+                nestedFramesPage.SelectParentFrame();
+            }
+        }
+
+        [Fact]
+        public void LoadChildFrame()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var nestedFramesPage = new NestedFramesPage(driver);
+                nestedFramesPage.LoadPage();
+                nestedFramesPage.SelectChildFrame();
+            }
+        }
     }
 }

@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
@@ -39,6 +40,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/modal-dialogs";
         private readonly string mainHeader = "Modal Dialogs";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        }
 
         public ModalDialogsPage(IWebDriver driver)
         {
@@ -58,6 +64,38 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void SelectSmallModal()
+        {
+            Driver.FindElement(By.Id("showSmallModal")).Click();
+            var modal = Wait().Until((d) => Driver.FindElement(By.ClassName("modal-content")));
+            var modalHeader = Driver.FindElement(By.Id("example-modal-sizes-title-sm")).Text;
+            var modalText = Driver.FindElement(By.ClassName("modal-body")).Text;
+
+            bool modalLoaded = (modalHeader == "Small Modal" && modalText == "This is a small modal. It has very less content");
+            if (!modalLoaded)
+            {
+                throw new Exception($"The small modal did not load properly on button click.");
+            }
+
+            //TODO: Verify close button works.
+        }
+
+        public void SelectLargeModal()
+        {
+            Driver.FindElement(By.Id("showLargeModal")).Click();
+            var modal = Wait().Until((d) => Driver.FindElement(By.ClassName("modal-content")));
+            var modalHeader = Driver.FindElement(By.Id("example-modal-sizes-title-lg")).Text;
+            var modalText = Driver.FindElement(By.ClassName("modal-body")).Text;
+
+            bool modalLoaded = (modalHeader == "Large Modal" && modalText == "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+            if (!modalLoaded)
+            {
+                throw new Exception($"The large modal did not load properly on button click.");
+            }
+
+            //TODO: Verify close button works.
         }
     }
 }

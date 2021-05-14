@@ -30,7 +30,9 @@ SOFTWARE.
  */
 
 using System;
+using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
@@ -39,6 +41,10 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/alerts";
         private readonly string mainHeader = "Alerts";
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+        }
 
         public AlertsPage(IWebDriver driver)
         {
@@ -59,6 +65,80 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void OpenAlert_ClickButtonToSeeAlert()
+        {
+            Driver.FindElement(By.Id("alertButton")).Click();
+            IAlert alert = Wait().Until((d) => Driver.SwitchTo().Alert());
+            string alertText = alert.Text;
+
+            bool isLoaded = (alertText == "You clicked a button");
+            if (!isLoaded)
+            {
+                throw new Exception($"The expected alert did not open when the button with ID:'alertButton' was clicked. ");
+            }
+            alert.Accept();
+        }
+
+        public void OpenAlert_AppearAfter5Seconds()
+        {
+            Driver.FindElement(By.Id("timerAlertButton")).Click();
+            IAlert alert = Wait().Until((d) => Driver.SwitchTo().Alert());
+            string alertText = alert.Text;
+
+            bool isLoaded = (alertText == "This alert appeared after 5 seconds");
+            if (!isLoaded)
+            {
+                throw new Exception($"The expected alert did not open when the button with ID:'timerAlertButton' was clicked. ");
+            }
+            alert.Accept();
+        }
+
+        public void OpenAlert_ConfirmBoxWillAppear()
+        {
+            Driver.FindElement(By.Id("confirmButton")).Click();
+            IAlert alert = Wait().Until((d) => Driver.SwitchTo().Alert());
+            string alertText = alert.Text;
+
+            bool isLoaded = (alertText == "Do you confirm action?");
+            if (!isLoaded)
+            {
+                throw new Exception($"The expected alert did not open when the button with ID:'confirmButton' was clicked. ");
+            }
+            alert.Accept();
+            var confirmationAccepted = Wait().Until((d) => Driver.FindElement(By.Id("confirmResult")));
+            bool confirmationValidated = (confirmationAccepted.Text == "You selected Ok");
+            if (!confirmationValidated)
+            {
+                throw new Exception($"The confirmation was accepted, but not validated.");
+            }
+
+        }
+
+        public void OpenAlert_PromptBoxWillAppear()
+        {
+            Driver.FindElement(By.Id("promtButton")).Click();
+            IAlert alert = Wait().Until((d) => Driver.SwitchTo().Alert());
+            string alertText = alert.Text;
+
+            bool isLoaded = (alertText == "Please enter your name");
+            if (!isLoaded)
+            {
+                throw new Exception($"The expected alert did not open when the button with ID:'promptButton' was clicked. ");
+            }
+
+            alert.SendKeys("John");
+            alert.Accept();
+            
+            //Validate value sent to prompt.
+            var promptValue = Wait().Until((d) => Driver.FindElement(By.Id("promptResult")).Text);
+            bool promptValueIsCorrect = (promptValue == "You entered John");
+            if (!promptValueIsCorrect)
+            {
+                throw new Exception($"The value given to the alert prompt was not successfully validated.");
+            }
+
         }
     }
 }

@@ -38,7 +38,28 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.AlertsFramesWindowsPages_Tests
 {
-    class DemoQA_ModalDialogsPageShould
+    public class DemoQA_ModalDialogsPageShould
     {
+        [Fact]
+        public void LoadSmallModalOnButtonClick()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var modalDialogPage = new ModalDialogsPage(driver);
+                modalDialogPage.LoadPage();
+                modalDialogPage.SelectSmallModal();
+            }
+        }
+
+        [Fact]
+        public void LoadLargeModalOnButtonClick()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var modalDialogPage = new ModalDialogsPage(driver);
+                modalDialogPage.LoadPage();
+                modalDialogPage.SelectLargeModal();
+            }
+        }
     }
 }

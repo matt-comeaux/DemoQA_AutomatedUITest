@@ -59,5 +59,30 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
         }
+
+        public void SelectParentFrame()
+        {
+            var parentFrame = Driver.SwitchTo().Frame("frame1");
+            var parentFrameText = parentFrame.FindElement(By.XPath("/html/body")).Text;
+
+            bool frameExist = (parentFrameText == "Parent frame");
+            if (!frameExist)
+            {
+                throw new Exception($"The parent frame does not exists");
+            }
+        }
+
+        public void SelectChildFrame()
+        {
+            var parentFrame = Driver.SwitchTo().Frame("frame1");
+            var childFrame = parentFrame.SwitchTo().Frame(0);
+            var childFrameText = childFrame.FindElement(By.XPath("/html/body/p")).Text;
+
+            bool frameExist = (childFrameText == "Child Iframe");
+            if (!frameExist)
+            {
+                throw new Exception($"The child frame does not exists.");
+            }
+        }
     }
 }

@@ -30,7 +30,9 @@ SOFTWARE.
  */
 
 using System;
+using System.Collections.ObjectModel;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
@@ -39,6 +41,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/browser-windows";
         private readonly string mainHeader = "Browser Windows";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+        }
 
         public BrowserWindowsPage(IWebDriver driver)
         {
@@ -59,5 +66,51 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
         }
+        
+        public void ClickButton_NewTab()
+        {
+            Driver.FindElement(By.Id("tabButton")).Click();
+            ReadOnlyCollection<String> allTabs = Driver.WindowHandles;
+            var tabCreatedOnButtonClick = allTabs[1]; 
+            var createdTab = Wait().Until((d) => Driver.SwitchTo().Window(tabCreatedOnButtonClick));
+
+            bool loadProperly = (createdTab.Url == "https://demoqa.com/sample" && Driver.FindElement(By.Id("sampleHeading")).Text == "This is a sample page");
+            if (!loadProperly)
+            {
+                throw new Exception($"The button with id of: 'tabButton' did not open the correct tab.");
+            }
+            
+        }
+
+        public void ClickButton_NewWindow()
+        {
+            Driver.FindElement(By.Id("windowButton")).Click();
+            ReadOnlyCollection<String> allWindows = Driver.WindowHandles;
+            var createdWindow = allWindows[1];
+            var newWindow = Wait().Until((d) => Driver.SwitchTo().Window(createdWindow));
+            
+            bool loadProperly = ( newWindow.Url == "https://demoqa.com/sample" && Driver.FindElement(By.Id("sampleHeading")).Text == "This is a sample page");
+            if (!loadProperly)
+            {
+                throw new Exception($"The button with id of: 'windowButton' did not open the correct window.");
+            }
+        }
+
+        public void ClickButton_NewWindowMessage()
+        {
+            var mainWindowHandle = Driver.CurrentWindowHandle;
+            Driver.FindElement(By.Id("messageWindowButton")).Click();
+            ReadOnlyCollection<String> allWindows = Driver.WindowHandles;
+            var windowMessage = Wait().Until((d) => Driver.SwitchTo().Window(allWindows[1]));
+
+            var windowMessageHandle = windowMessage.CurrentWindowHandle;
+            bool loadWindowMessage = (mainWindowHandle != windowMessageHandle);
+            if (!loadWindowMessage)
+            {
+                throw new Exception($"The message window failed to load.");
+            }
+            
+        }
+
     }
 }

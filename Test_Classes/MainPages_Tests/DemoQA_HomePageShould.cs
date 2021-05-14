@@ -41,7 +41,7 @@ using AutomatedUITest_DemoQA.Page_Object_Models.Interactions;
 using AutomatedUITest_DemoQA.Page_Object_Models.Widgets;
 using Xunit;
 
-namespace AutomatedUITest_DemoQA
+namespace AutomatedUITest_DemoQA.Test_Classes.MainPages_Test
 {
     public class DemoQA_HomePageShould
     {

@@ -39,8 +39,50 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.AlertsFramesWindowsPages_Tests
 {
-    class DemoQA_AlertsPageShould
+    public class DemoQA_AlertsPageShould
     {
+        [Fact]
+        public void OpenAlert_ClickButtonToSeeAlert()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsPage = new AlertsPage(driver);
+                alertsPage.LoadPage();
+                alertsPage.OpenAlert_ClickButtonToSeeAlert();
+            }
+        }
 
+        [Fact]
+        public void OpenAlert_AppearAfter5Seconds()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsPage = new AlertsPage(driver);
+                alertsPage.LoadPage();
+                alertsPage.OpenAlert_AppearAfter5Seconds();
+            }
+        }
+
+        [Fact]
+        public void OpenAlert_ConfirmBoxWillAppear()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsPage = new AlertsPage(driver);
+                alertsPage.LoadPage();
+                alertsPage.OpenAlert_ConfirmBoxWillAppear();
+            }
+        }
+
+        [Fact]
+        public void OpenAlert_PromptBoxWillAppear()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var alertsPage = new AlertsPage(driver);
+                alertsPage.LoadPage();
+                alertsPage.OpenAlert_PromptBoxWillAppear();
+            }
+        }
     }
 }

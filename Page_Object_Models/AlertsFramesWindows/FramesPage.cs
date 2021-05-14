@@ -59,5 +59,29 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
         }
+
+        public void SelectFrame_Frame1()
+        {
+            var frame = Driver.SwitchTo().Frame("frame1");
+            var frameText = frame.FindElement(By.XPath("/html/body/h1")).Text;
+
+            bool frameExist = (frameText == "This is a sample page");
+            if (!frameExist)
+            {
+                throw new Exception($"The targeted frame does not exist, or did not load properly");
+            }
+        }
+
+        public void SelectFrame_Frame2()
+        {
+            var frame = Driver.SwitchTo().Frame("frame2");
+            var frameText = frame.FindElement(By.XPath("/html/body/h1")).Text;
+
+            bool frameExist = (frameText == "This is a sample page");
+            if (!frameExist)
+            {
+                throw new Exception($"The targeted frame does not exist, or did not load properly");
+            }
+        }
     }
 }
