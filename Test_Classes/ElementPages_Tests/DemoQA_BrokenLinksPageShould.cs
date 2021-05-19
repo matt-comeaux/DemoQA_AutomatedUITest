@@ -38,7 +38,50 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_BrokenLinksPageShould
+    public class DemoQA_BrokenLinksPageShould
     {
+        [Fact]
+        public void VerifyValidImageLink()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var brokenLinksPage = new BrokenLinksPage(driver);
+                brokenLinksPage.LoadPage();
+                brokenLinksPage.VerifyValidImage();
+            }
+        }
+
+        [Fact]
+        public void VerifyBrokenImageLink()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var brokenLinksPage = new BrokenLinksPage(driver);
+                brokenLinksPage.LoadPage();
+                brokenLinksPage.VerifyBrokenImage();
+            }
+        }
+
+        [Fact]
+        public void VerifyBrokenLink()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var brokenLinksPage = new BrokenLinksPage(driver);
+                brokenLinksPage.LoadPage();
+                brokenLinksPage.VerifyBrokenLink();
+            }
+        }
+
+        [Fact]
+        public void VerifyWorkingLink()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var brokenLinksPage = new BrokenLinksPage(driver);
+                brokenLinksPage.LoadPage();
+                brokenLinksPage.VerifyWorkingLink();
+            }
+        }
     }
 }

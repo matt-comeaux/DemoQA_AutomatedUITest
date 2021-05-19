@@ -38,7 +38,105 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_LinksPageShould
+    public class DemoQA_LinksPageShould
     {
+        [Fact]
+        public void HaveFunctionalLink_Home()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_Home();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_HomeiybUo()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_HomeiybUo();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_Created()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_Created();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_NoContent()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_NoContent();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_Moved()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_Moved();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_BadRequest()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_BadRequest();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_Unauthorized()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_Unauthorized();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_Forbidden()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_Forbidden();
+            }
+        }
+
+        [Fact]
+        public void HaveFunctionalLink_NotFound()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var linksPage = new LinksPage(driver);
+                linksPage.LoadPage();
+                linksPage.ClickLink_NotFound();
+            }
+        }
     }
 }

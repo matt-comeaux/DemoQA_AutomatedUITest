@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -60,5 +61,48 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
             }
         }
 
+        public void VerifyValidImage()
+        {
+            var imageLink = Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/img[1]"));
+           
+            bool isLoaded = (imageLink.GetAttribute("naturalWidth") != "0");
+            if (!isLoaded)
+            {
+                throw new Exception($"This image from source: '{imageLink.GetAttribute("src")}' did not load properly.");
+            }
+        }
+
+        public void VerifyBrokenImage()
+        {
+            var imageWidth = Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/img[2]"));
+            bool isNotLoaded = (imageWidth.GetAttribute("naturalWidth") == "0");
+            if (!isNotLoaded)
+            {
+                throw new Exception($"The image with the source of: '{imageWidth.GetAttribute("src")}' loaded. This image is supposed to be broken.");
+            }
+        }
+
+        public void VerifyWorkingLink()
+        {
+            Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/a[1]")).Click();
+            var currentUrl = Driver.Url;
+            bool isWorking = (currentUrl == "https://demoqa.com");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is broken. The target site of https://demoqa.com was not reached.");
+            }
+        }
+
+        public void VerifyBrokenLink()
+        {
+            Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/a[2]")).Click();
+            var currentUrl = Driver.Url;
+            bool isBroken = (currentUrl != "https://demoqa.com");
+            if (!isBroken)
+            {
+                throw new Exception($"The selected link was supposed to be broken. However it is navigating to the correct site of https://demoqa.com");
+            }
+
+        }
     }
 }

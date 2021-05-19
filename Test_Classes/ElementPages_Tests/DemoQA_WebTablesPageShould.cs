@@ -38,7 +38,39 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_WebTablesPageShould
+    public class DemoQA_WebTablesPageShould
     {
+        [Fact]
+        public void AddNewEntryToTable()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var webTablesPage = new WebTablesPage(driver);
+                webTablesPage.LoadPage();
+                webTablesPage.CreateNewEntry();
+            }
+        }
+
+        [Fact]
+        public void EditExistingEntry()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var webTablesPage = new WebTablesPage(driver);
+                webTablesPage.LoadPage();
+                webTablesPage.EditExistingEntry();
+            }
+        }
+
+        [Fact]
+        public void DeleteExistingEntry()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var webTablesPage = new WebTablesPage(driver);
+                webTablesPage.LoadPage();
+                webTablesPage.DeleteExistingEntry();
+            }
+        }
     }
 }

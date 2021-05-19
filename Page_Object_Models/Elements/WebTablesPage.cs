@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -39,6 +40,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/webtables";
         private readonly string mainHeader = "Web Tables";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        }
 
         public WebTablesPage(IWebDriver driver)
         {
@@ -60,5 +66,134 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
             }
         }
 
+        public void CreateNewEntry()
+        {
+            var firstName = "John";
+            var lastName = "Wick";
+            var email = "john@random.com";
+            var age = "40";
+            var salary = "10000";
+            var department = "sales";
+
+
+            Driver.FindElement(By.Id("addNewRecordButton")).Click();
+            Wait().Until((d) => Driver.FindElement(By.Id("registration-form-modal")));
+            
+            //Add record.
+            Driver.FindElement(By.Id("firstName")).SendKeys(firstName);
+            Driver.FindElement(By.Id("lastName")).SendKeys(lastName);
+            Driver.FindElement(By.Id("userEmail")).SendKeys(email);
+            Driver.FindElement(By.Id("age")).SendKeys(age);
+            Driver.FindElement(By.Id("salary")).SendKeys(salary);
+            Driver.FindElement(By.Id("department")).SendKeys(department);
+            Driver.FindElement(By.Id("submit")).Click();
+
+            //Verify record was added.
+            var recordCount = Driver.FindElements(By.ClassName("rt-tr-group")).Count;
+            var recordAdded = Driver.FindElements(By.ClassName("rt-tr-group"))[recordCount - 7];
+            bool firstNameCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[0].Text == firstName);
+            bool lastNameCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[1].Text == lastName);
+            bool emailCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[3].Text == email);
+            bool ageCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[2].Text == age);
+            bool salaryCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[4].Text == salary);
+            bool departmentCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[5].Text == department);
+
+            if (!firstNameCorrect)
+            {
+                throw new Exception($"The first name was not added to records correctly.");
+            }
+            else if (!lastNameCorrect)
+            {
+                throw new Exception($"The last name was not added to records correctly.");
+            }
+            else if (!emailCorrect)
+            {
+                throw new Exception($"The email address was not added to records correctly.");
+            }
+            else if (!ageCorrect)
+            {
+                throw new Exception($"The age was not added to records correctly.");
+            }
+            else if (!salaryCorrect)
+            {
+                throw new Exception($"The salary was not added to records correctly.");
+            }
+            else if (!departmentCorrect)
+            {
+                throw new Exception($"The department was not added to records correctly.");
+            }
+
+        }
+
+        public void EditExistingEntry()
+        {
+            var firstName = "John";
+            var lastName = "Wick";
+            var age = "40";
+            var salary = "10000";
+            var department = "sales";
+
+            Driver.FindElement(By.Id("edit-record-1")).Click();
+            Wait().Until((d) => Driver.FindElement(By.Id("registration-form-modal")));
+
+            //Clear current information.
+            //Add new record information.
+            Driver.FindElement(By.Id("firstName")).Clear();
+            Driver.FindElement(By.Id("firstName")).SendKeys(firstName);
+            Driver.FindElement(By.Id("lastName")).Clear();
+            Driver.FindElement(By.Id("lastName")).SendKeys(lastName);
+            Driver.FindElement(By.Id("age")).Clear();
+            Driver.FindElement(By.Id("age")).SendKeys(age);
+            Driver.FindElement(By.Id("salary")).Clear();
+            Driver.FindElement(By.Id("salary")).SendKeys(salary);
+            Driver.FindElement(By.Id("department")).Clear();
+            Driver.FindElement(By.Id("department")).SendKeys(department);
+            Driver.FindElement(By.Id("submit")).Click();
+            
+            //Verify record was added.
+            var recordCount = Driver.FindElements(By.ClassName("rt-tr-group")).Count;
+            var recordAdded = Driver.FindElements(By.ClassName("rt-tr-group"))[recordCount - 10];
+            bool firstNameCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[0].Text == firstName);
+            bool lastNameCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[1].Text == lastName);
+            bool ageCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[2].Text == age);
+            bool salaryCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[4].Text == salary);
+            bool departmentCorrect = (recordAdded.FindElements(By.ClassName("rt-td"))[5].Text == department);
+
+            if (!firstNameCorrect)
+            {
+                throw new Exception($"The first name was not added to records correctly.");
+            }
+            else if (!lastNameCorrect)
+            {
+                throw new Exception($"The last name was not added to records correctly.");
+            }
+            else if (!ageCorrect)
+            {
+                throw new Exception($"The age was not added to records correctly.");
+            }
+            else if (!salaryCorrect)
+            {
+                throw new Exception($"The salary was not added to records correctly.");
+            }
+            else if (!departmentCorrect)
+            {
+                throw new Exception($"The department was not added to records correctly.");
+            }
+        }
+
+        public void DeleteExistingEntry()
+        {
+            var originalFirstRecord = Driver.FindElements(By.ClassName("rt-tr-group"))[1];
+
+            Driver.FindElement(By.Id("delete-record-1")).Click();
+            var recordCount = Driver.FindElements(By.ClassName("rt-tr-group")).Count;
+            var newFirstRecord = Driver.FindElements(By.ClassName("rt-tr-group"))[recordCount - 10];
+
+            bool recordDeleted = (originalFirstRecord.FindElements(By.ClassName("rt-td"))[0].Text != newFirstRecord.FindElements(By.ClassName("rt-td"))[0].Text);
+            if (!recordDeleted)
+            {
+                throw new Exception($"The delete record button is no longer working.");
+            }
+        }
     }
 }

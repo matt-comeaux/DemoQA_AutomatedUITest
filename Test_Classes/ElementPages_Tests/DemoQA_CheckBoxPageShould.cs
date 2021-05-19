@@ -38,7 +38,17 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_CheckBoxPageShould
+    public class DemoQA_CheckBoxPageShould
     {
+        [Fact]
+        public void LoadAllFiles()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var checkBoxPage = new CheckBoxPage(driver);
+                checkBoxPage.LoadPage();
+                checkBoxPage.SelectAllFiles();
+            }
+        }
     }
 }

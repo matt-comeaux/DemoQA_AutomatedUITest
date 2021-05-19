@@ -38,7 +38,39 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_DynamicPropertiesPageShould
+    public class DemoQA_DynamicPropertiesPageShould
     {
+        [Fact]
+        public void ClickButton_WillEnableAfter5Seconds()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var buttonPage = new DynamicPropertiesPage(driver);
+                buttonPage.LoadPage();
+                buttonPage.ClickButton_EnabledAfter5Seconds();
+            }
+        }
+
+        [Fact]
+        public void VerifyColorChangeOnButton_ColorChange()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var buttonPage = new DynamicPropertiesPage(driver);
+                buttonPage.LoadPage();
+                buttonPage.VerifyButtonColorChange();
+            }
+        }
+
+        [Fact]
+        public void ClickButton_VisibleAfter5Seconds()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var buttonPage = new DynamicPropertiesPage(driver);
+                buttonPage.LoadPage();
+                buttonPage.ClickButton_VisibleAfter5Seconds();
+            }
+        }
     }
 }

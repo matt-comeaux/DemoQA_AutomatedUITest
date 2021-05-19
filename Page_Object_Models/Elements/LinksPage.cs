@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -39,6 +40,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/links";
         private readonly string mainHeader = "Links";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        }
 
         public LinksPage(IWebDriver driver)
         {
@@ -60,5 +66,105 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
             }
         }
 
+        public void ClickLink_Home()
+        {
+            Driver.FindElement(By.Id("simpleLink")).Click();
+            var tabs = Driver.WindowHandles;
+            var linkDestination = Driver.SwitchTo().Window(tabs[1]);
+            bool isWorking = (linkDestination.Url == "https://demoqa.com/");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_HomeiybUo()
+        {
+            Driver.FindElement(By.Id("dynamicLink")).Click();
+            var tabs = Driver.WindowHandles;
+            var linkDestination = Driver.SwitchTo().Window(tabs[1]);
+            bool isWorking = (linkDestination.Url == "https://demoqa.com/");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_Created()
+        {
+            Driver.FindElement(By.Id("created")).Click();
+            var response = Wait().Until((d) => Driver.FindElement(By.Id("linkResponse")).Text);
+            bool isWorking = (response == "Link has responded with staus 201 and status text Created");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_NoContent()
+        {
+            Driver.FindElement(By.Id("no-content")).Click();
+            var response = Wait().Until((d) => Driver.FindElement(By.Id("linkResponse")).Text);
+            bool isWorking = (response == "Link has responded with staus 204 and status text No Content");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_Moved()
+        {
+            Driver.FindElement(By.Id("moved")).Click();
+            var response = Wait().Until((d) => Driver.FindElement(By.Id("linkResponse")).Text);
+            bool isWorking = (response == "Link has responded with staus 301 and status text Moved Permanently");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_BadRequest()
+        {
+            Driver.FindElement(By.Id("bad-request")).Click();
+            var response = Wait().Until((d) => Driver.FindElement(By.Id("linkResponse")).Text);
+            bool isWorking = (response == "Link has responded with staus 400 and status text Bad Request");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_Unauthorized()
+        {
+            Driver.FindElement(By.Id("unauthorized")).Click();
+            var response = Wait().Until((d) => Driver.FindElement(By.Id("linkResponse")).Text);
+            bool isWorking = (response == "Link has responded with staus 401 and status text Unauthorized");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_Forbidden()
+        {
+            Driver.FindElement(By.Id("forbidden")).Click();
+            var response = Wait().Until((d) => Driver.FindElement(By.Id("linkResponse")).Text);
+            bool isWorking = (response == "Link has responded with staus 403 and status text Forbidden");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
+
+        public void ClickLink_NotFound()
+        {
+            Driver.FindElement(By.Id("invalid-url")).Click();
+            var response = Wait().Until((d) => Driver.FindElement(By.Id("linkResponse")).Text);
+            bool isWorking = (response == "Link has responded with staus 404 and status text Not Found");
+            if (!isWorking)
+            {
+                throw new Exception($"The selected link is no longer working.");
+            }
+        }
     }
 }

@@ -38,7 +38,28 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_TextBoxPageShould
+    public class DemoQA_TextBoxPageShould
     {
+        [Fact]
+        public void SubmitFormWhenValid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var textBoxPage = new TextBoxPage(driver);
+                textBoxPage.LoadPage();
+                textBoxPage.SubmitValidForm();
+            }
+        }
+
+        [Fact]
+        public void StopSubmissionWhenNotValid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var textBoxPage = new TextBoxPage(driver);
+                textBoxPage.LoadPage();
+                textBoxPage.VerifyInvalidFormsAreNotSubmitted();
+            }
+        }
     }
 }

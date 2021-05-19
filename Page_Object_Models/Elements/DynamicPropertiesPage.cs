@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -39,6 +40,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/dynamic-properties";
         private readonly string mainHeader = "Dynamic Properties";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+        }
 
         public DynamicPropertiesPage(IWebDriver driver)
         {
@@ -60,5 +66,25 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
             }
         }
 
+        public void ClickButton_EnabledAfter5Seconds()
+        {
+            //Button doesn't do anything on click yet. Will update if that ever changes.
+            var button = Driver.FindElement(By.Id("enableAfter"));
+            Wait().Until((d) => button.Enabled);
+            button.Click();
+        }
+
+        public void VerifyButtonColorChange()
+        {
+            //Button doesn't do anything on click yet. Will update if that ever changes.
+            Wait().Until((d) => Driver.FindElement(By.ClassName("text-danger")));
+        }
+
+        public void ClickButton_VisibleAfter5Seconds()
+        {
+            //Button doesn't do anything on click yet. Will update if that ever changes.
+            var button = Wait().Until((d) => Driver.FindElement(By.Id("visibleAfter")));
+            button.Click();
+        }
     }
 }

@@ -38,7 +38,39 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_ButtonsPageShould
+    public class DemoQA_ButtonsPageShould
     {
+        [Fact]
+        public void ConfirmButtonWasClicked_DoubleClickMe()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var buttonsPage = new ButtonsPage(driver);
+                buttonsPage.LoadPage();
+                buttonsPage.ClickButton_DoubleClickMe();
+            }  
+        }
+
+        [Fact]
+        public void ConfirmButtonWasClicked_RightClickMe()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var buttonsPage = new ButtonsPage(driver);
+                buttonsPage.LoadPage();
+                buttonsPage.ClickButton_RightClickMe();
+            }
+        }
+
+        [Fact]
+        public void ConfirmButtonWasClicked_ClickMe()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var buttonsPage = new ButtonsPage(driver);
+                buttonsPage.LoadPage();
+                buttonsPage.ClickButton_ClickMe();
+            }
+        }
     }
 }

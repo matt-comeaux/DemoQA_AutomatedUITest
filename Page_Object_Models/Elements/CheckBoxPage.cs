@@ -30,7 +30,9 @@ SOFTWARE.
  */
 
 using System;
+using System.Collections.ObjectModel;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -39,6 +41,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/checkbox";
         private readonly string mainHeader = "Check Box";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        }
 
         public CheckBoxPage(IWebDriver driver)
         {
@@ -60,5 +67,25 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
             }
         }
 
+        public void SelectAllFiles()
+        {
+            var selectAllFilesButton = Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/div/ol/li/span/label/span[1]"));
+            selectAllFilesButton.Click();
+            var results = Wait().Until((d) => Driver.FindElements(By.ClassName("text-success")));
+
+            //Must maintain current order.
+            string[] expectedResults = 
+                { "home","desktop","notes","commands","documents","workspace","react","angular","veu","office","public","private","classified","general","downloads","wordFile","excelFile" };
+
+
+            for (int i = 0; i < expectedResults.Length; i++)
+            {
+                bool loaded = (expectedResults[i] == results[i].Text);
+                if (!loaded)
+                {
+                    throw new Exception($"The file/folder: '{expectedResults[i]}' did not load.");
+                }
+            }
+        }
     }
 }

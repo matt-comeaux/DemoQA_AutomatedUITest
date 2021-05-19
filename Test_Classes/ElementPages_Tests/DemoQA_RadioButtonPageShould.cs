@@ -38,7 +38,39 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
-    class DemoQA_RadioButtonPageShould
+    public class DemoQA_RadioButtonPageShould
     {
+        [Fact]
+        public void SelectRadioButton_Yes()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var radioButtonPage = new RadioButtonPage(driver);
+                radioButtonPage.LoadPage();
+                radioButtonPage.SelectRadioButton_Yes();
+            }
+        }
+
+        [Fact]
+        public void SelectRadioButton_Impressive()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var radioButtonPage = new RadioButtonPage(driver);
+                radioButtonPage.LoadPage();
+                radioButtonPage.SelectRadioButton_Impressive();
+            }
+        }
+
+        [Fact]
+        public void NotAllowRadioButtonToBeSelect_No()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var radioButtonPage = new RadioButtonPage(driver);
+                radioButtonPage.LoadPage();
+                radioButtonPage.SelectRadioButton_No(); //Will Check that radio button titled 'no' is disabled.
+            }
+        }
     }
 }
