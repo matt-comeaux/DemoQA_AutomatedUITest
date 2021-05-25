@@ -38,7 +38,50 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.InteractionPages_Tests
 {
-    class DemoQA_SelectablePageShould
+    public class DemoQA_SelectablePageShould
     {
+        [Fact]
+        public void SelectAllItems_List()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectablePage = new SelectablePage(driver);
+                selectablePage.LoadPage();
+                selectablePage.SelectAllFromList();
+            }            
+        }
+
+        [Fact]
+        public void DeselectAllItems_List()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectablePage = new SelectablePage(driver);
+                selectablePage.LoadPage();
+                selectablePage.DeselectAllFromList();
+            }
+        }
+
+        [Fact]
+        public void SelectAllItems_Grid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectablePage = new SelectablePage(driver);
+                selectablePage.LoadPage();
+                selectablePage.SelectAllFromGrid();
+            }
+        }
+
+        [Fact]
+        public void DeselectAllItems_Grid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectablePage = new SelectablePage(driver);
+                selectablePage.LoadPage();
+                selectablePage.DeselectAllFromGrid();
+            }
+        }
     }
 }

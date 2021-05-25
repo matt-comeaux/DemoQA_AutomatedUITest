@@ -38,7 +38,83 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.InteractionPages_Tests
 {
-    class DemoQA_DroppablePageShould
+    public class DemoQA_DroppablePageShould
     {
+        [Fact]
+        public void DropIcon_SimpleTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var droppablePage = new DroppablePage(driver);
+                droppablePage.LoadPage();
+                droppablePage.DropIcon_SimpleTab();
+            }            
+        }
+
+        [Fact]
+        public void DropAcceptableIcon_AcceptTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var droppablePage = new DroppablePage(driver);
+                droppablePage.LoadPage();
+                droppablePage.DropAcceptableIcon_AcceptTab();
+            }
+        }
+
+        [Fact]
+        public void DropNotAcceptableIcon_AcceptTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var droppablePage = new DroppablePage(driver);
+                droppablePage.LoadPage();
+                droppablePage.DropNotAcceptableIcon_AcceptTab();
+            }
+        }
+
+        [Fact]
+        public void DropGreedyIcon_PropogationTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var droppablePage = new DroppablePage(driver);
+                droppablePage.LoadPage();
+                droppablePage.DropGreedyIcon_PropogationTab();
+            }
+        }
+
+        [Fact]
+        public void DropNotGreedyIcon_PropogationTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var droppablePage = new DroppablePage(driver);
+                droppablePage.LoadPage();
+                droppablePage.DropNotGreedyIcon_PropogationTab();
+            }
+        }
+
+        [Fact]
+        public void DropRevertIcon_RevertTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var droppablePage = new DroppablePage(driver);
+                droppablePage.LoadPage();
+                droppablePage.DropRevertIcon_RevertTab();
+            }
+        }
+
+        [Fact]
+        public void DropNonRevertIcon_RevertTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var droppablePage = new DroppablePage(driver);
+                droppablePage.LoadPage();
+                droppablePage.DropNonRevertIcon_RevertTab();
+            }
+        }
     }
 }

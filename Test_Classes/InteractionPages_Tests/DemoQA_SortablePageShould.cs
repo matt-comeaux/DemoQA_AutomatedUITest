@@ -38,7 +38,28 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.InteractionPages_Tests
 {
-    class DemoQA_SortablePageShould
+     public class DemoQA_SortablePageShould
     {
+        [Fact]
+        public void HaveAllItemsBeSortable_List()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var sortablePage = new SortablePage(driver);
+                sortablePage.LoadPage();
+                sortablePage.SortItems_List();
+            }
+        }
+
+        [Fact]
+        public void HaveAllItemsBeSortable_Grid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var sortablePage = new SortablePage(driver);
+                sortablePage.LoadPage();
+                sortablePage.SortItems_Grid();
+            }
+        }
     }
 }

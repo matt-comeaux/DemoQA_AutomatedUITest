@@ -38,7 +38,94 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.InteractionPages_Tests
 {
-    class DemoQA_DraggablePageShould
+    public class DemoQA_DraggablePageShould
     {
+        [Fact]
+        public void DragIcon_SimpleTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragIcon_SimpleTab();
+            } 
+        }
+
+        [Fact]
+        public void DragXAxis_AccessRestrictedTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragXAxis_AccessRestrictedTab();
+            }
+        }
+
+        [Fact]
+        public void DragYAxis_AccessRestrictedTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragYAxis_AccessRestrictedTab();
+            }
+        }
+
+        [Fact]
+        public void DragBoxIcon_ContainerRestricedTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragBoxIcon_ContainerRestricedTab();
+            }
+        }
+
+        [Fact]
+        public void DragParentIcon_ContainerRestricedTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragParentIcon_ContainerRestricedTab();
+            }
+        }
+
+        [Fact]
+        public void DragCenterIcon_CursorStyleTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragCenterIcon_CursorStyleTab();
+            }
+        }
+
+        [Fact]
+        public void DragTopLeftIcon_CursorStyleTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragTopLeftIcon_CursorStyleTab();
+            }
+        }
+
+        [Fact]
+        public void DragBottomIcon_CursorStyleTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var draggablePage = new DraggablePage(driver);
+                draggablePage.LoadPage();
+                draggablePage.DragBottomIcon_CursorStyleTab();
+            }
+        }
     }
 }

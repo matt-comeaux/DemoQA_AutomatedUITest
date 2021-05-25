@@ -31,6 +31,9 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 {
@@ -40,6 +43,10 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         private readonly string url = "https://demoqa.com/sortable";
         private readonly string mainHeader = "Sortable";
 
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver,TimeSpan.FromSeconds(5));
+        }
         public SortablePage(IWebDriver driver)
         {
             this.Driver = driver;
@@ -57,6 +64,53 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             if (!isLoaded)
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+            }
+        }
+
+        public void SortItems_List()
+        {
+            var listContainer = Driver.FindElement(By.Id("demo-tabpane-list"));
+            var listItems = listContainer.FindElements(By.ClassName("list-group-item"));
+
+            for (int i = 0; i < listItems.Count; i++)
+            {
+                var textOfItemsPlace = listItems[i].Text;
+                Actions action = new Actions(Driver);
+                
+                //Drag each item to bottom of list.
+                action.DragAndDropToOffset(listItems[0], 15, 312);
+                action.Perform();
+
+                //Verify list was resorted.
+                var newTextOfItemsPlace = listItems[i].Text;
+                bool wasResorted = (textOfItemsPlace != newTextOfItemsPlace);
+                Assert.True(wasResorted, "The selected list item number: " + i + " was not sorted");
+            }
+        }
+
+        public void SortItems_Grid()
+        {
+            //Navigate to grid tab
+            Driver.FindElement(By.Id("demo-tab-grid")).Click();
+
+            //Collect grid items
+            var gridContainer = Driver.FindElement(By.Id("demo-tabpane-grid"));
+            var gridItems = gridContainer.FindElements(By.ClassName("list-group-item"));
+
+            //Sort grid items
+            for (int i = 0; i < gridItems.Count; i++)
+            {
+                var textOfItemsPlace = gridItems[i].Text;
+                Actions action = new Actions(Driver);
+
+                //Drag each item to bottom of list.
+                action.DragAndDropToOffset(gridItems[0], 235, 266);
+                action.Perform();
+
+                //Verify list was resorted.
+                var newTextOfItemsPlace = gridItems[i].Text;
+                bool wasResorted = (textOfItemsPlace != newTextOfItemsPlace);
+                Assert.True(wasResorted, "The selected grid item: " + gridItems[i].Text + " was not sorted");
             }
         }
     }

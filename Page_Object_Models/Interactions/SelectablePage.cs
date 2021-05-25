@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 {
@@ -57,6 +58,92 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             if (!isLoaded)
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
+            }
+        }
+
+        public void SelectAllFromList()
+        {
+            var list = Driver.FindElement(By.Id("verticalListContainer"));
+            var listItems = list.FindElements(By.TagName("li"));
+            var attr = listItems[1].GetAttribute("Class").Contains("active");
+
+            for (int i = 0; i < listItems.Count; i++)
+            {
+                listItems[i].Click();
+                
+                //Verify item was activated.
+                bool isSelected = (listItems[i].GetAttribute("Class").Contains("active"));
+                Assert.True(isSelected, "The list item number: " + i + " was not selected when clicked");
+            } 
+        }
+
+        public void DeselectAllFromList()
+        {
+            //Select all list items.
+            SelectAllFromList();
+
+            //Start Deselection.
+            var list = Driver.FindElement(By.Id("verticalListContainer"));
+            var listItems = list.FindElements(By.TagName("li"));
+
+            for (int i = 0; i < listItems.Count; i++)
+            {
+                listItems[i].Click();
+
+                //Verify list item was deselected.
+                bool isActive = (listItems[i].GetAttribute("Class").Contains("active"));
+                Assert.False(isActive, "The list item number: " + i + " was not deselected when clicked");
+            }
+        }
+
+        public void SelectAllFromGrid()
+        {
+            //Switch to grid tab.
+            Driver.FindElement(By.Id("demo-tab-grid")).Click();
+
+            var grid = Driver.FindElement(By.Id("gridContainer"));
+            var gridRows = grid.FindElements(By.TagName("div"));
+
+            for (int i = 0; i < gridRows.Count; i++)
+            {
+                var currentRow = gridRows[i];
+                var currentRowListItems = currentRow.FindElements(By.TagName("li"));
+                
+                for (int j = 0; j < currentRowListItems.Count; j++)
+                {
+                    currentRowListItems[j].Click();
+
+                    //Verify item is selected.
+                    bool isSelected = (currentRowListItems[j].GetAttribute("Class").Contains("active"));
+                    Assert.True(isSelected, "The item of grid row: " + i + " list item number: " + j + " was not selected when clicked");
+                }
+
+            }
+        }
+
+        public void DeselectAllFromGrid()
+        {
+            //Make all items selected.
+            SelectAllFromGrid();
+
+            //Start deselecting
+            var grid = Driver.FindElement(By.Id("gridContainer"));
+            var gridRows = grid.FindElements(By.TagName("div"));
+
+            for (int i = 0; i < gridRows.Count; i++)
+            {
+                var currentRow = gridRows[i];
+                var currentRowListItems = currentRow.FindElements(By.TagName("li"));
+
+                for (int j = 0; j < currentRowListItems.Count; j++)
+                {
+                    currentRowListItems[j].Click();
+
+                    //Verify item is not selected.
+                    bool isSelected = (currentRowListItems[j].GetAttribute("Class").Contains("active"));
+                    Assert.False(isSelected, "The item of grid row: " + i + " list item number: " + j + " was not deselected when clicked");
+                }
+
             }
         }
     }

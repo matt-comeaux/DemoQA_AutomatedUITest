@@ -38,7 +38,27 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.InteractionPages_Tests
 {
-    class DemoQA_ResizeablePageShould
+    public class DemoQA_ResizeablePageShould
     {
+        [Fact]
+        public void ResizeRestrictedBox()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var resizeablePage = new ResizablePage(driver);
+                resizeablePage.LoadPage();
+                resizeablePage.ResizeRestricedBox();
+            }
+        }
+
+        [Fact]
+        public void ResizeNonRestrictedBox()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var resizeablePage = new ResizablePage(driver);
+                resizeablePage.LoadPage();
+            }
+        }
     }
 }

@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DelayHelper.cs" />
     <Compile Include="Test_Classes\AlertsFramesWindowsPages_Tests\DemoQA_AlertsPageShould.cs" />
     <Compile Include="Test_Classes\AlertsFramesWindowsPages_Tests\DemoQA_BrowserWindowsPageShould.cs" />
     <Compile Include="Test_Classes\AlertsFramesWindowsPages_Tests\DemoQA_FramesPageShould.cs" />

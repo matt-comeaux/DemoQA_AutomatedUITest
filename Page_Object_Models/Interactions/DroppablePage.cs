@@ -31,6 +31,9 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 {
@@ -39,6 +42,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/droppable";
         private readonly string mainHeader = "Droppable";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        }
 
         public DroppablePage(IWebDriver driver)
         {
@@ -58,6 +66,142 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void DropIcon_SimpleTab()
+        {
+            var icon = Driver.FindElement(By.Id("draggable"));
+            var dropBox = Driver.FindElement(By.Id("droppable"));
+            Actions action = new Actions(Driver);
+
+            action.DragAndDrop(icon, dropBox);
+            action.Perform();
+
+            bool wasDropped = (dropBox.Text == "Dropped!");
+            Assert.True(wasDropped, "The selected icon never made it to the drop box");
+        }
+
+        public void DropAcceptableIcon_AcceptTab()
+        {
+            //Switch to accept tab
+            Driver.FindElement(By.Id("droppableExample-tab-accept")).Click();
+            var icon = Driver.FindElement(By.Id("acceptable"));
+            //Using XPath as the webdev gave each dropbox the same id...
+            var dropBox = Driver.FindElement(By.XPath("//*[@id='acceptDropContainer']/div[@id='droppable']"));
+            Actions action = new Actions(Driver);
+
+            action.DragAndDrop(icon, dropBox);
+            action.Perform();
+
+            bool wasDropped = (dropBox.Text == "Dropped!");
+            Assert.True(wasDropped, "The selected icon never made it to the drop box");
+        }
+
+        public void DropNotAcceptableIcon_AcceptTab()
+        {
+            //Switch to accept tab
+            Driver.FindElement(By.Id("droppableExample-tab-accept")).Click();
+            var icon = Driver.FindElement(By.Id("notAcceptable"));
+            //Using XPath as the webdev gave dropbox the same id as the one on the simpletab.
+            var dropBox = Driver.FindElement(By.XPath("//*[@id='acceptDropContainer']/div[@id='droppable']"));
+            Actions action = new Actions(Driver);
+
+            action.DragAndDrop(icon, dropBox);
+            action.Perform();
+
+            bool wasDropped = (dropBox.Text == "Dropped!");
+            Assert.False(wasDropped, "The selected icon was dropped when it shouldn't have been!");
+        }
+
+        public void DropGreedyIcon_PropogationTab()
+        {
+            //Switch to propogation tab
+            Driver.FindElement(By.Id("droppableExample-tab-preventPropogation")).Click();
+            var icon = Driver.FindElement(By.Id("dragBox"));
+            var outerDropBox = Driver.FindElement(By.Id("greedyDropBox"));
+            var innerDropBox = Driver.FindElement(By.Id("greedyDropBoxInner"));
+            Actions action = new Actions(Driver);
+
+            action.DragAndDrop(icon, innerDropBox);
+            action.Perform();
+
+            bool wasDroppedOuter = (outerDropBox.Text == "Dropped!");
+            bool wasDroppedInner = (innerDropBox.Text == "Dropped!");
+            Assert.False(wasDroppedOuter, "The selected icon's drop was registered by the outer drop box when it shouldn't have been.");
+            Assert.True(wasDroppedInner, "The selected icon's drop was not registered by the inner drop box.");
+
+        }
+
+        public void DropNotGreedyIcon_PropogationTab()
+        {
+            //Switch to propogation tab
+            Driver.FindElement(By.Id("droppableExample-tab-preventPropogation")).Click();
+            var icon = Driver.FindElement(By.Id("dragBox"));
+            var outerDropBox = Driver.FindElement(By.Id("notGreedyDropBox"));
+            var innerDropBox = Driver.FindElement(By.Id("notGreedyInnerDropBox"));
+            Actions action = new Actions(Driver);
+
+            action.DragAndDrop(icon, innerDropBox);
+            action.Perform();
+
+            //!!Keep remove method as the outer drop box text repeats 'Dropped!' multiple times with page break. No idea why, as it doesn't show this way in developer tools.
+            bool wasDroppedInner = (innerDropBox.Text == "Dropped!");
+            bool wasDroppedOuter = (outerDropBox.Text.Remove(8) == "Dropped!");
+
+            Assert.True(wasDroppedOuter, "The selected icon's drop was not registered by the outer drop box.");
+            Assert.True(wasDroppedInner, "The selected icon's drop was not registered by the inner drop box.");
+        }
+
+        public void DropRevertIcon_RevertTab()
+        {
+            //Switch to revert tab
+            Driver.FindElement(By.Id("droppableExample-tab-revertable")).Click();
+            var icon = Driver.FindElement(By.Id("revertable"));
+            //Used to confirm that the icon reverts to original location.
+            var position = icon.Location;
+            //Using XPath as the webdev gave dropbox the same id as the one on the simpletab.
+            var dropBox = Driver.FindElement(By.XPath("//*[@id='revertableDropContainer']/div[@id='droppable']"));
+            Actions action = new Actions(Driver);
+
+            //Drag icon to dropbox.
+            action.DragAndDrop(icon, dropBox);
+            action.Perform();
+
+            //Wait for travel animation to finish.
+            Wait().Until((d) => icon.Location == position);
+            //Used to confirm icon reverts to original location.
+            var newPosition = icon.Location;           
+
+            //Validation.
+            bool wasDropped = (dropBox.Text == "Dropped!");
+            bool didRevert = (position == newPosition);
+            Assert.True(wasDropped, "The selected icon was not dropped.");
+            Assert.True(didRevert, "The selected icon did not revert to its original location.");
+        }
+
+        public void DropNonRevertIcon_RevertTab()
+        {
+            //Switch to revert tab
+            Driver.FindElement(By.Id("droppableExample-tab-revertable")).Click();
+            var icon = Driver.FindElement(By.Id("notRevertable"));
+            //Used to confirm that the icon reverts to original location.
+            var position = icon.Location;
+            //Using XPath as the webdev gave dropbox the same id as the one on the simpletab.
+            var dropBox = Driver.FindElement(By.XPath("//*[@id='revertableDropContainer']/div[@id='droppable']"));
+            Actions action = new Actions(Driver);
+
+            //Drag icon to dropbox.
+            action.DragAndDrop(icon, dropBox);
+            action.Perform();
+
+            //Used to confirm icon reverts to original location.
+            var newPosition = icon.Location;
+
+            //Validation.
+            bool wasDropped = (dropBox.Text == "Dropped!");
+            bool didNotRevert = (position != newPosition);
+            Assert.True(wasDropped, "The selected icon was not dropped.");
+            Assert.True(didNotRevert, "The selected icon reverted to its original location. It should have remained in drop box.");
         }
     }
 }

@@ -38,7 +38,28 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.FormPages_Tests
 {
-    class DemoQA_PracticeFormsPageShould
+    public class DemoQA_PracticeFormsPageShould
     {
+        [Fact]
+        public void SubmitFormWhenValid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var practiceFormPage = new PracticeFormsPage(driver);
+                practiceFormPage.LoadPage();
+                practiceFormPage.SubmitValidForm();
+            }
+        }
+
+        [Fact]
+        public void NotSubmitFormWhenInvalid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var practiceFormPage = new PracticeFormsPage(driver);
+                practiceFormPage.LoadPage();
+                practiceFormPage.SubmitInvalidForm();
+            }
+        }
     }
 }

@@ -31,6 +31,8 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 {
@@ -58,6 +60,40 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void ResizeRestricedBox()
+        {
+            var box = Driver.FindElement(By.Id("resizableBoxWithRestriction"));
+            var boxHandle = Driver.FindElement(By.XPath("//*[@id='resizableBoxWithRestriction']/span"));
+            var initialSize = box.Size;
+            Actions actions = new Actions(Driver);
+
+            //Resize box.
+            actions.ClickAndHold(boxHandle).MoveByOffset(374, 180);
+            actions.Perform();
+
+            //Validation.
+            var newSize = box.Size;
+            bool wasResized = (initialSize != newSize);
+            Assert.True(wasResized, "The select box failed to resize");
+        }
+
+        public void ResizeNonRestrictedBox()
+        {
+            var box = Driver.FindElement(By.Id("resizableBoxWithRestriction"));
+            var boxHandle = Driver.FindElement(By.XPath("//*[@id='resizable']/span"));
+            var initialSize = box.Size;
+            Actions actions = new Actions(Driver);
+
+            //Resize box.
+            actions.ClickAndHold(boxHandle).MoveByOffset(473, 267);
+            actions.Perform();
+
+            //Validation.
+            var newSize = box.Size;
+            bool wasResized = (initialSize != newSize);
+            Assert.True(wasResized, "The select box failed to resize");
         }
     }
 }
