@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 {
@@ -58,6 +59,37 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void AutoSelect_SelectDateField()
+        {
+            var input = Driver.FindElement(By.Id("datePickerMonthYearInput"));
+            var unformatedDate = "3/3/2007";
+            //Send incomplete date and click enter
+            input.SendKeys(Keys.Control + "a"); //.Clear() will not work here.
+            input.SendKeys(unformatedDate);
+            input.SendKeys(Keys.Enter);
+
+            //Validate that date was auto selected from the sent unformated date.
+            var autoSelectedDate = input.GetAttribute("value");
+            bool wasAutoCompleted = (autoSelectedDate == "03/03/2007");
+            Assert.True(wasAutoCompleted, "The date 03/03/2007 was not auto selected when the text: " + unformatedDate + " was entered. The text output was: " + autoSelectedDate);
+
+        }
+
+        public void AutoSelect_DateAndTimeField()
+        {
+            var input = Driver.FindElement(By.Id("dateAndTimePickerInput"));
+            var unformatedDate = "3/3/2007 11:30";
+            //Send incomplete date and click enter
+            input.SendKeys(Keys.Control + "a"); //.Clear() will not work here.
+            input.SendKeys(unformatedDate);
+            input.SendKeys(Keys.Enter);
+
+            //Validate that date was auto selected from the sent unformated date.
+            var autoSelectedDate = input.GetAttribute("value");
+            bool wasAutoCompleted = (autoSelectedDate == "March 3, 2007 11:30 AM");
+            Assert.True(wasAutoCompleted, "The date March 3, 2007 11:30 AM was not auto selected when the text: " + unformatedDate + " was entered. The text output was: " + autoSelectedDate);
         }
     }
 }

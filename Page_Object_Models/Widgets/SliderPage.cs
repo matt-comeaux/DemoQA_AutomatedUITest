@@ -30,7 +30,11 @@ SOFTWARE.
  */
 
 using System;
+using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.Extensions;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 {
@@ -59,5 +63,38 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
         }
+
+        public void Increase_Slider()
+        {
+            var slider = Driver.FindElement(By.ClassName("range-slider"));
+            Actions action = new Actions(Driver);
+
+            //Move slider
+            action.ClickAndHold(slider);
+            action.MoveByOffset(50, 0);
+            action.Release();
+            action.Perform();
+
+            //Validate that sliders value increased
+            var sliderValue = Convert.ToInt32(slider.GetAttribute("value"));
+            Assert.True(sliderValue > 25);
+        }
+
+        public void Decrease_Slider()
+        {
+            var slider = Driver.FindElement(By.ClassName("range-slider"));
+            Actions action = new Actions(Driver);
+
+            //Move slider
+            action.ClickAndHold(slider);
+            action.MoveByOffset(-75, 0);
+            action.Release();
+            action.Perform();
+
+            //Validate that sliders value increased
+            var sliderValue = Convert.ToInt32(slider.GetAttribute("value"));
+            Assert.True(sliderValue < 25);
+        }
+
     }
 }

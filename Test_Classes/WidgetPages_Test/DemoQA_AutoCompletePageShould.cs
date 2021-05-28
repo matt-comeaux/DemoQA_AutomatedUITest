@@ -38,7 +38,28 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_AutoCompletePageShould
+    public class DemoQA_AutoCompletePageShould
     {
+        [Fact]
+        public void SelectMultipleColorsFromDropdown()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var autoCompletePage = new AutoCompletePage(driver);
+                autoCompletePage.LoadPage();
+                autoCompletePage.SelectMultipleColors();
+            }
+        }
+
+        [Fact]
+        public void SelectSingleColorFromDropdown()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var autoCompletePage = new AutoCompletePage(driver);
+                autoCompletePage.LoadPage();
+                autoCompletePage.SelectSingleColor();
+            }
+        }
     }
 }

@@ -40,5 +40,7 @@ namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
     class DemoQA_MenuPageShould
     {
+        //The menu widget either doesn't work or doesn't do anything on the website.
+        //Until this is fixed, or there is something to actually test, the associated classes will remain empty. 
     }
 }

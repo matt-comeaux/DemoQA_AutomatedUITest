@@ -59,5 +59,8 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
         }
+
+        //The menu widget either doesn't work or doesn't do anything on the website.
+        //Until this is fixed, or there is something to actually test, the associated classes will remain empty. 
     }
 }

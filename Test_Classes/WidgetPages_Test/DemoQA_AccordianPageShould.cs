@@ -38,7 +38,39 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_AccordianPageShould
+    public class DemoQA_AccordianPageShould
     {
+        [Fact]
+        public void DisplaySelectedTextOnClick_WhatIsTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var accordianPage = new AccordianPage(driver);
+                accordianPage.LoadPage();
+                accordianPage.DisplayText_WhatIsTab();
+            }
+        }
+
+        [Fact]
+        public void DisplaySelectedTextOnClick_WhereDoesTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var accordianPage = new AccordianPage(driver);
+                accordianPage.LoadPage();
+                accordianPage.DisplayText_WhereDoesTab();
+            }
+        }
+
+        [Fact]
+        public void DisplaySelectedTextOnClick_WhyUseTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var accordianPage = new AccordianPage(driver);
+                accordianPage.LoadPage();
+                accordianPage.DisplayText_WhyUseTab();
+            }
+        }
     }
 }

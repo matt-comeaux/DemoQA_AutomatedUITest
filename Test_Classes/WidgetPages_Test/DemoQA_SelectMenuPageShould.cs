@@ -38,7 +38,61 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_SelectMenuPageShould
+    public class DemoQA_SelectMenuPageShould
     {
+        [Fact]
+        public void SelectFrom_SelectValueField()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectMenuPage = new SelectMenuPage(driver);
+                selectMenuPage.LoadPage();
+                selectMenuPage.SelectFrom_SelectValueField();
+            }
+        }
+
+        [Fact]
+        public void SelectFrom_SelectOneField()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectMenuPage = new SelectMenuPage(driver);
+                selectMenuPage.LoadPage();
+                selectMenuPage.SelectFrom_SelectOneField();
+            }
+        }
+
+        [Fact]
+        public void SelectFrom_OldStyleMenu()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectMenuPage = new SelectMenuPage(driver);
+                selectMenuPage.LoadPage();
+                selectMenuPage.SelectFrom_OldStyleMenu();
+            }
+        }
+
+        [Fact]
+        public void SelectFrom_MultiSelectDropDown()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectMenuPage = new SelectMenuPage(driver);
+                selectMenuPage.LoadPage();
+                selectMenuPage.SelectFrom_MultiSelectDropDown();
+            }
+        }
+
+        [Fact]
+        public void SelectFrom_StandardDropDown()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var selectMenuPage = new SelectMenuPage(driver);
+                selectMenuPage.LoadPage();
+                selectMenuPage.SelectFrom_StandardDropDown();
+            }
+        }
     }
 }

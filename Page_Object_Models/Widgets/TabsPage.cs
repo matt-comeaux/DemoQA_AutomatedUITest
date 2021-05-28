@@ -30,7 +30,10 @@ SOFTWARE.
  */
 
 using System;
+using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 {
@@ -39,6 +42,11 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/tabs";
         private readonly string mainHeader = "Tabs";
+
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        }
 
         public TabsPage(IWebDriver driver)
         {
@@ -58,6 +66,45 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void Display_WhatTab()
+        {
+            //Click different tab as the 'what' tab is open on load.
+            Driver.FindElement(By.Id("demo-tab-origin")).Click();
+
+            //Click 'what' tab and wait for text to appear.
+            Driver.FindElement(By.Id("demo-tab-what")).Click();
+            Wait().Until((d) => Driver.FindElement(By.XPath("//*[@id='demo-tabpane-what']/p")).Text);
+
+            //Verify text. Only testing first sentence due to text length.
+            var firstSentence = Driver.FindElement(By.XPath("//*[@id='demo-tabpane-what']/p")).Text.Remove(74);
+            var expectedText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+            Assert.True(firstSentence == expectedText, "The 'What' tab did not display its text properly");
+           }
+
+        public void Display_OriginTab()
+        {
+            //Click tab and wait for text to appear.
+            Driver.FindElement(By.Id("demo-tab-origin")).Click();
+            Wait().Until((d) => Driver.FindElement(By.XPath("//*[@Class='tab-content']/div[2]/p[1]")).Text);
+
+            //Verify text. Only testing first sentence due to text length.
+            var firstSentence = Driver.FindElement(By.XPath("//*[@Class='tab-content']/div[2]/p[1]")).Text.Remove(66);
+            var expectedText = "Contrary to popular belief, Lorem Ipsum is not simply random text.";
+            Assert.True(firstSentence == expectedText, "The 'Origin' tab did not display its text properly");
+        }
+
+        public void Display_UseTab()
+        {
+            //Click tab and wait for text to appear.
+            Driver.FindElement(By.Id("demo-tab-use")).Click();
+            Wait().Until((d) => Driver.FindElement(By.XPath("//*[@Class='tab-content']/div[3]/p")).Text);
+
+            //Verify text. Only testing first sentence due to text length.
+            var firstSentence = Driver.FindElement(By.XPath("//*[@Class='tab-content']/div[3]/p")).Text.Remove(124);
+            var expectedText = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.";
+            Assert.True(firstSentence == expectedText, "The 'Use' tab did not display its text properly");
         }
     }
 }

@@ -38,7 +38,39 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_ProgressBarPageShould
+    public class DemoQA_ProgressBarPageShould
     {
+        [Fact]
+        public void StartOnClick()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var progressBarPage = new ProgressBarPage(driver);
+                progressBarPage.LoadPage();
+                progressBarPage.StartProgressBar();
+            }
+        }
+
+        [Fact]
+        public void StopOnClick()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var progressBarPage = new ProgressBarPage(driver);
+                progressBarPage.LoadPage();
+                progressBarPage.StopProgressBar();
+            }
+        }
+
+        [Fact]
+        public void DisplayCorrectPercentageOnStop()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var progressBarPage = new ProgressBarPage(driver);
+                progressBarPage.LoadPage();
+                progressBarPage.StopProgressBarOnSpecificPercent();
+            }
+        }
     }
 }

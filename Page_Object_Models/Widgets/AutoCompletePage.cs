@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 {
@@ -58,6 +59,41 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void SelectMultipleColors()
+        {
+            var input = Driver.FindElement(By.Id("autoCompleteMultipleInput"));
+            string[] colors = { "Re", "Blu", "Blac" }; //incomplete as the we are testing auto-complete
+            string[] expectedColors = { "Red", "Blue","Black" }; //Should match order of colors array.
+
+            //Enter partial color names and press enter.
+            for (int i = 0; i < colors.Length; i++)
+            {
+                input.SendKeys(colors[i]);
+                input.SendKeys(Keys.Enter);
+            }
+           
+            //Test that the colors were correctly auto-completed.
+            var autoCompleteColors = Driver.FindElements(By.ClassName("auto-complete__multi-value__label"));
+            for (int i = 0; i < autoCompleteColors.Count; i++)
+            {
+                Assert.True(autoCompleteColors[i].Text == expectedColors[i], 
+                    "The color: " + expectedColors[i] + " was not properly auto completed when the following was typed" + colors[i]);
+            }
+        }
+
+        public void SelectSingleColor()
+        {
+            //Single color field
+            var input = Driver.FindElement(By.Id("autoCompleteSingleInput"));
+            //Send partial color to single color field and hit enter.
+            input.SendKeys("Blu");
+            input.SendKeys(Keys.Enter);
+
+            //Check that the send color was auto completed correctly
+            bool wasAutoCompleted = (Driver.FindElement(By.ClassName("auto-complete__single-value")).Text == "Blue");
+            Assert.True(wasAutoCompleted, "The color blue was not auto completed when 'blu' was typed.");
         }
     }
 }

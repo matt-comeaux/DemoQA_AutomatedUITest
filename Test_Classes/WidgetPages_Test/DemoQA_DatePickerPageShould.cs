@@ -38,7 +38,28 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_DatePickerPageShould
+    public class DemoQA_DatePickerPageShould
     {
+        [Fact]
+        public void AutoSelect_SelectDateField()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var datePickerPage = new DatePickerPage(driver);
+                datePickerPage.LoadPage();
+                datePickerPage.AutoSelect_SelectDateField();
+            }            
+        }
+
+        [Fact]
+        public void AutoSelect_DateAndTimeField()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var datePickerPage = new DatePickerPage(driver);
+                datePickerPage.LoadPage();
+                datePickerPage.AutoSelect_DateAndTimeField();
+            }
+        }
     }
 }

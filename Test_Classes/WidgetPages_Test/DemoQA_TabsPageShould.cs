@@ -38,7 +38,39 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_TabsPageShould
+    public class DemoQA_TabsPageShould
     {
+        [Fact]
+        public void DisplayTextOnClick_WhatTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var tabsPage = new TabsPage(driver);
+                tabsPage.LoadPage();
+                tabsPage.Display_WhatTab();
+            }            
+        }
+
+        [Fact]
+        public void DisplayTextOnClick_OriginTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var tabsPage = new TabsPage(driver);
+                tabsPage.LoadPage();
+                tabsPage.Display_OriginTab();
+            }
+        }
+
+        [Fact]
+        public void DisplayTextOnClick_UseTab()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var tabsPage = new TabsPage(driver);
+                tabsPage.LoadPage();
+                tabsPage.Display_UseTab();
+            }
+        }
     }
 }

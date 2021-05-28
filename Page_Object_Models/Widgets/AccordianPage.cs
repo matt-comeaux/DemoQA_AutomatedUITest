@@ -31,6 +31,8 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 {
@@ -58,6 +60,37 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void DisplayText_WhatIsTab()
+        {
+            //Since this tab is alway open on load we close it before beginning test.
+            Driver.FindElement(By.Id("section1Heading")).Click();
+            //Now we open the tab and verify the text is being displayed.
+            Driver.FindElement(By.Id("section1Heading")).Click();
+
+            //Verify text is displayed. Ignoring correctness for now as text is way too long.
+            bool isDisplayed = (Driver.FindElement(By.Id("section1Content")).Enabled);
+
+            Assert.True(isDisplayed, "The selected tab's text was not displayed.");
+        }
+        public void DisplayText_WhereDoesTab()
+        {
+            //Open tab. Using javascript to click as element isn't visible on default window size.
+            Driver.ExecuteJavaScript("document.getElementById('section2Heading').click();");
+
+            //Verify text is displayed. Ignoring correctness for now as text is way too long.
+            bool isDisplayed = (Driver.FindElement(By.Id("section2Content")).Enabled);
+            Assert.True(isDisplayed, "The selected tab's text was not displayed.");
+        }
+        public void DisplayText_WhyUseTab()
+        {
+            //Open tab. Using javascript to click as element isn't visible on default window size.
+            Driver.ExecuteJavaScript("document.getElementById('section3Heading').click();");
+
+            //Verify text is displayed. Ignoring correctness for now as text is way too long.
+            bool isDisplayed = (Driver.FindElement(By.Id("section3Content")).Enabled);
+            Assert.True(isDisplayed, "The selected tab's text was not displayed.");
         }
     }
 }

@@ -30,7 +30,10 @@ SOFTWARE.
  */
 
 using System;
+using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 {
@@ -40,6 +43,10 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/progress-bar";
         private readonly string mainHeader = "Progress Bar";
 
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+        }
         public ProgressBarPage(IWebDriver driver)
         {
             this.Driver = driver;
@@ -58,6 +65,50 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void StartProgressBar()
+        {
+            var trigger = Driver.FindElement(By.Id("startStopButton")); //This is the start/stop button
+            var progressBar = Driver.FindElement(By.ClassName("progress-bar")); //This is container for the progress bar percentage.
+
+            //Click the start button and wait 150 miliseconds. This is to give the progress bar time to update.
+            trigger.Click();
+            Thread.Sleep(150);
+
+            //Verify progress bar was started.
+            bool wasActivated = (progressBar.GetAttribute("aria-valuenow") != "0");
+            Assert.True(wasActivated, "The progress bar was not activated.");
+        }
+
+        public void StopProgressBar()
+        {
+            var trigger = Driver.FindElement(By.Id("startStopButton")); //This is the start/stop button
+            var progressBar = Driver.FindElement(By.ClassName("progress-bar")); //This is container for the progress bar percentage.
+
+            //Start the progress bar and then stop it.
+            trigger.Click();//Start
+            trigger.Click(); //Stop
+
+            //Verify progress bar is stopped
+            var progress1 = progressBar.GetAttribute("aria-valuenow");
+            var progress2 = progressBar.GetAttribute("aria-valuenow");
+            bool isStopped = (progress1 == progress2);
+            Assert.True(isStopped, "The progress bar was not stopped!");
+        }
+
+        public void StopProgressBarOnSpecificPercent()
+        {
+            var trigger = Driver.FindElement(By.Id("startStopButton")); //This is the start/stop button
+            var progressBar = Driver.FindElement(By.ClassName("progress-bar")); //This is container for the progress bar percentage.
+
+            //Start progress bar, wait until it reaches 25%, and then stop the progress bar.
+            trigger.Click(); //Start
+            Wait().Until((d) => progressBar.GetAttribute("aria-valuenow") == "25");
+            trigger.Click(); //Stop
+
+            var displayedCorrectly = (progressBar.GetAttribute("aria-valuenow") == "25");
+            Assert.True(displayedCorrectly);
         }
     }
 }

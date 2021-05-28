@@ -29,6 +29,13 @@ SOFTWARE.
 
  */
 
+/*
+ 
+NOTES:
+    - The box that contains the value of the slider doesn't allow users to change it by typing. Thus no tests for that functionality.
+
+*/
+
 using System;
 using AutomatedUITest_DemoQA.Page_Object_Models.Widgets;
 using OpenQA.Selenium;
@@ -38,7 +45,29 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_SliderPageShould
+    public class DemoQA_SliderPageShould
     {
+        [Fact]
+        public void IncreaseBySliding()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var sliderPage = new SliderPage(driver);
+                sliderPage.LoadPage();
+                sliderPage.Increase_Slider();
+            }
+        }
+
+        [Fact]
+        public void DecreaseBySliding()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var sliderPage = new SliderPage(driver);
+                sliderPage.LoadPage();
+                sliderPage.Decrease_Slider();
+            }
+        }
+
     }
 }
