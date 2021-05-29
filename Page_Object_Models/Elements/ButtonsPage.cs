@@ -33,6 +33,7 @@ using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -69,50 +70,51 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 
         public void ClickButton_DoubleClickMe()
         {
+            //Double click button.
             Actions action = new Actions(Driver);
             var button = Driver.FindElement(By.Id("doubleClickBtn"));
             action.MoveToElement(button);
             action.DoubleClick();
             action.Perform();
 
+            //Wait for confirmation text to appear.
             var confirmationText = Wait().Until((d) => Driver.FindElement(By.Id("doubleClickMessage"))).Text;
-            bool wasClicked = (confirmationText == "You have done a double click");
-            if (!wasClicked)
-            {
-                throw new Exception($"The button titled 'Double Click Me' is not working properly.");
-            }
+
+            //Validate that double click button was clicked.
+            Assert.True(confirmationText == "You have done a double click", "The button titled 'Double Click Me' is not working properly.");
         }
 
         public void ClickButton_RightClickMe()
         {
+            //Right click button.
             Actions action = new Actions(Driver);
             var button = Driver.FindElement(By.Id("rightClickBtn"));
             action.MoveToElement(button);
             action.ContextClick();
             action.Perform();
 
+            //Wait for confirmation text.
             var confirmationText = Wait().Until((d) => Driver.FindElement(By.Id("rightClickMessage"))).Text;
-            bool wasClicked = (confirmationText == "You have done a right click");
-            if (!wasClicked)
-            {
-                throw new Exception($"The button titled 'Right Click Me' is not working properly.");
-            }
-        }
+
+            //Validate right click button was right clicked.
+            Assert.True(confirmationText == "You have done a right click", "The button titled 'Right Click Me' is not working properly.");
+         }
 
         public void ClickButton_ClickMe()
         {
+
+            //Click button
             Actions action = new Actions(Driver);
             var button = Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/div[3]/button")); //Button has dynamic Id thus xpath.
             action.MoveToElement(button);
             action.Click();
             action.Perform();
 
+            //Wait for confirmation text.
             var confirmationText = Wait().Until((d) => Driver.FindElement(By.Id("dynamicClickMessage"))).Text;
-            bool wasClicked = (confirmationText == "You have done a dynamic click");
-            if (!wasClicked)
-            {
-                throw new Exception($"The button titled 'Click Me' is not working properly.");
-            }
+
+            //Validate button was clicked.
+            Assert.True(confirmationText == "You have done a dynamic click", "The button titled 'Click Me' is not working properly.");
         }
 
     }

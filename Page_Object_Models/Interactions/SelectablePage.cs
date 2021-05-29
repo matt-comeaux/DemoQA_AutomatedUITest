@@ -63,15 +63,17 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 
         public void SelectAllFromList()
         {
+            //Find list and its items.
             var list = Driver.FindElement(By.Id("verticalListContainer"));
             var listItems = list.FindElements(By.TagName("li"));
-            var attr = listItems[1].GetAttribute("Class").Contains("active");
-
+  
+            //Select every list item and verify they were selected.
             for (int i = 0; i < listItems.Count; i++)
             {
+                //Select item.
                 listItems[i].Click();
                 
-                //Verify item was activated.
+                //Verify item was selected.
                 bool isSelected = (listItems[i].GetAttribute("Class").Contains("active"));
                 Assert.True(isSelected, "The list item number: " + i + " was not selected when clicked");
             } 
@@ -82,12 +84,14 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             //Select all list items.
             SelectAllFromList();
 
-            //Start Deselection.
+            //Find list and its items.
             var list = Driver.FindElement(By.Id("verticalListContainer"));
             var listItems = list.FindElements(By.TagName("li"));
 
+            //Deselected all items.
             for (int i = 0; i < listItems.Count; i++)
             {
+                //Deselect item.
                 listItems[i].Click();
 
                 //Verify list item was deselected.
@@ -101,16 +105,21 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             //Switch to grid tab.
             Driver.FindElement(By.Id("demo-tab-grid")).Click();
 
+            //Find grid and grid rows.
             var grid = Driver.FindElement(By.Id("gridContainer"));
             var gridRows = grid.FindElements(By.TagName("div"));
 
+            //Select every grid item.
             for (int i = 0; i < gridRows.Count; i++)
             {
+                //Get current row and its items.
                 var currentRow = gridRows[i];
                 var currentRowListItems = currentRow.FindElements(By.TagName("li"));
                 
+                //Select every item in current grid row.
                 for (int j = 0; j < currentRowListItems.Count; j++)
                 {
+                    //Select grid item.
                     currentRowListItems[j].Click();
 
                     //Verify item is selected.
@@ -121,25 +130,30 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             }
         }
 
+
         public void DeselectAllFromGrid()
         {
-            //Make all items selected.
+            //Select all items from grid.
             SelectAllFromGrid();
 
-            //Start deselecting
+            //Find grid and grid rows.
             var grid = Driver.FindElement(By.Id("gridContainer"));
             var gridRows = grid.FindElements(By.TagName("div"));
 
+            //Deselect all grid items.
             for (int i = 0; i < gridRows.Count; i++)
             {
+                //Get current row and its items.
                 var currentRow = gridRows[i];
                 var currentRowListItems = currentRow.FindElements(By.TagName("li"));
 
+                //Deselect every item in current grid row.
                 for (int j = 0; j < currentRowListItems.Count; j++)
                 {
+                    //Click item in current grid row.
                     currentRowListItems[j].Click();
 
-                    //Verify item is not selected.
+                    //Verify item was deselected.
                     bool isSelected = (currentRowListItems[j].GetAttribute("Class").Contains("active"));
                     Assert.False(isSelected, "The item of grid row: " + i + " list item number: " + j + " was not deselected when clicked");
                 }

@@ -64,36 +64,36 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 
         public void ResizeRestricedBox()
         {
+            //Find box to resize, its resize handle, and its current size. Then create instance of Actions.
             var box = Driver.FindElement(By.Id("resizableBoxWithRestriction"));
             var boxHandle = Driver.FindElement(By.XPath("//*[@id='resizableBoxWithRestriction']/span"));
             var initialSize = box.Size;
             Actions actions = new Actions(Driver);
 
-            //Resize box.
+            //Resize box and store its current size.
             actions.ClickAndHold(boxHandle).MoveByOffset(374, 180);
             actions.Perform();
-
-            //Validation.
             var newSize = box.Size;
-            bool wasResized = (initialSize != newSize);
-            Assert.True(wasResized, "The select box failed to resize");
+
+            //Validate that the box was properly resized.
+            Assert.True(initialSize != newSize, "The select box failed to resize");
         }
 
         public void ResizeNonRestrictedBox()
         {
+            //Find box to resize, its resize handle, and its current size. Then create instance of Actions.
             var box = Driver.FindElement(By.Id("resizableBoxWithRestriction"));
             var boxHandle = Driver.FindElement(By.XPath("//*[@id='resizable']/span"));
             var initialSize = box.Size;
             Actions actions = new Actions(Driver);
 
-            //Resize box.
+            //Resize box and store its current size.
             actions.ClickAndHold(boxHandle).MoveByOffset(473, 267);
             actions.Perform();
-
-            //Validation.
             var newSize = box.Size;
-            bool wasResized = (initialSize != newSize);
-            Assert.True(wasResized, "The select box failed to resize");
+            
+            //Validation.
+             Assert.True(initialSize != newSize, "The select box failed to resize");
         }
     }
 }

@@ -64,145 +64,158 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 
         public void DragIcon_SimpleTab()
         {
+            //Find icon to be dragged, along with its location, and store them. Then create instance of Actions.
             var targetIcon = Driver.FindElement(By.Id("dragBox"));
-            var currentPosition = targetIcon.Location;
+            var oldPosition = targetIcon.Location;
             Actions action = new Actions(Driver);
 
+            //Drag targeted icon to new location. Store its new location.
             action.DragAndDropToOffset(targetIcon,277,208);
             action.Perform();
             var newPosition = targetIcon.Location;
 
-            //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            Assert.True(changedLocations, "The selected icon did not change locations.");
+            //Validate dragging of icon is working as intended.
+            Assert.True(oldPosition != newPosition, "The selected icon did not change locations.");
         }
 
-        public void DragXAxis_AccessRestrictedTab()
+        public void DragXAxis_AxisRestrictedTab()
         {
+            //Navigate to the axis restricted tab.   
             Driver.FindElement(By.Id("draggableExample-tab-axisRestriction")).Click();
+
+            //Find icon to be dragged, along with its location, and store them. Then create instance of Actions.
             var targetIcon = Driver.FindElement(By.Id("restrictedX"));
-            var currentPosition = targetIcon.Location;
+            var oldPosition = targetIcon.Location;
             Actions action = new Actions(Driver);
 
+            //Drag targeted icon to new location. Store its new location.
             action.DragAndDropToOffset(targetIcon, 277, 208);
             action.Perform();
             var newPosition = targetIcon.Location;
 
-            //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            bool didNotChangeYPosition = (currentPosition.Y == newPosition.Y);
-            Assert.True(changedLocations, "The selected icon did not change locations.");
-            Assert.True(didNotChangeYPosition, "The Y position has changed when it should be locked.");
+            //Validate icon was dragged only across the y-axis.
+            Assert.True(oldPosition != newPosition, "The selected icon did not change locations.");
+            Assert.True(oldPosition.Y == newPosition.Y, "The Y position has changed when it should be locked.");
         }
 
-        public void DragYAxis_AccessRestrictedTab()
+        public void DragYAxis_AxisRestrictedTab()
         {
+            //Navigate to the axis restricted tab.
             Driver.FindElement(By.Id("draggableExample-tab-axisRestriction")).Click();
+
+            //Find icon to be dragged, along with its location, and store them. Then create instance of Actions.
             var targetIcon = Driver.FindElement(By.Id("restrictedY"));
-            var currentPosition = targetIcon.Location;
+            var oldPosition = targetIcon.Location;
             Actions action = new Actions(Driver);
 
+            //Drag targeted icon to new location. Store its new location.
             action.DragAndDropToOffset(targetIcon, 277, 208);
             action.Perform();
             var newPosition = targetIcon.Location;
 
-            //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            bool didNotChangeXPosition = (currentPosition.X == newPosition.X);
-            Assert.True(changedLocations, "The selected icon did not change locations.");
-            Assert.True(didNotChangeXPosition, "The X position has changed when it should be locked.");
+            //Validate icon was dragged only across the y-axis.
+            Assert.True(oldPosition != newPosition, "The selected icon did not change locations.");
+            Assert.True(oldPosition.X == newPosition.X, "The X position has changed when it should be locked.");
         }
 
         public void DragBoxIcon_ContainerRestricedTab()
         {
+            //Navigate to the container restriced tab.
             Driver.FindElement(By.Id("draggableExample-tab-containerRestriction")).Click();
-            var targetIcon = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div/div"));
-            var currentPosition = targetIcon.Location;
-            var invalidLocation = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div[2]/span"));
 
+            //Find icon to be dragged and its location.Then find an invalid location and create instance of Actions.
+            var targetIcon = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div/div"));
+            var oldPosition = targetIcon.Location;
+            var invalidLocation = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div[2]/span"));
             Actions action = new Actions(Driver);
 
+            //Drag targeted icon to invalid location. Store its new location.
             action.DragAndDrop(targetIcon, invalidLocation);
             action.Perform();
             var newPosition = targetIcon.Location;
 
-            //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            bool didNotLeaveContainer = (newPosition != invalidLocation.Location);
-            Assert.True(changedLocations, "The selected icon did not change locations.");
-            Assert.True(didNotLeaveContainer, "The selected icon left its container and was moved to an ivalid location.");
+            //Validate icon was dragged, but remained in its container.
+            Assert.True(oldPosition != newPosition, "The selected icon did not change locations.");
+            Assert.True(newPosition != invalidLocation.Location, "The selected icon left its container and was moved to an ivalid location.");
         }
 
         public void DragParentIcon_ContainerRestricedTab()
         {
+            //Navigate to the container restriced tab.
             Driver.FindElement(By.Id("draggableExample-tab-containerRestriction")).Click();
-            var targetIcon = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div[2]/span"));
-            var currentPosition = targetIcon.Location;
-            var invalidLocation = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div/div"));
 
+            //Find icon to be dragged and its location.Then find an invalid location and create instance of Actions.
+            var targetIcon = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div[2]/span"));
+            var oldPosition = targetIcon.Location;
+            var invalidLocation = Driver.FindElement(By.XPath("//*[@id='draggableExample-tabpane-containerRestriction']/div/div"));
             Actions action = new Actions(Driver);
 
+            //Drag targeted icon to invalid location. Store its new location.
             action.DragAndDrop(targetIcon, invalidLocation);
             action.Perform();
             var newPosition = targetIcon.Location;
 
-            //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            bool didNotLeaveContainer = (newPosition != invalidLocation.Location);
-            Assert.True(changedLocations, "The selected box did not change locations.");
-            Assert.True(didNotLeaveContainer, "The selected box left its container and was moved to an ivalid location.");
+            //Validate icon was dragged, but remained in its container.
+            Assert.True(oldPosition != newPosition, "The selected box did not change locations.");
+            Assert.True(newPosition != invalidLocation.Location, "The selected box left its container and was moved to an ivalid location.");
         }
 
         public void DragCenterIcon_CursorStyleTab()
         {
             //Go to cursor style tab.
             Driver.FindElement(By.Id("draggableExample-tab-cursorStyle")).Click();
+
+            //Find icon to be dragged, along with its location, and store them. Then create instance of Actions.
             var targetIcon = Driver.FindElement(By.Id("cursorCenter"));
-            var currentPosition = targetIcon.Location;
+            var oldPosition = targetIcon.Location;
             Actions action = new Actions(Driver);
 
+            //Drag target icon to new location and store its location.
             action.DragAndDropToOffset(targetIcon, 277, 208);
             action.Perform();
             var newPosition = targetIcon.Location;
 
-            //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            Assert.True(changedLocations, "The selected icon did not change locations.");
+            //Validate dragging of icon is working as intended.
+            Assert.True(oldPosition != newPosition, "The selected icon did not change locations.");
         }
 
         public void DragTopLeftIcon_CursorStyleTab()
         {
             //Go to cursor style tab.
             Driver.FindElement(By.Id("draggableExample-tab-cursorStyle")).Click();
+
+            //Find icon to be dragged, along with its location, and store them. Then create instance of Actions.
             var targetIcon = Driver.FindElement(By.Id("cursorTopLeft"));
-            var currentPosition = targetIcon.Location;
+            var oldPosition = targetIcon.Location;
             Actions action = new Actions(Driver);
 
+            //Drag target icon to new location and store its location.
             action.DragAndDropToOffset(targetIcon, 277, 208);
             action.Perform();
             var newPosition = targetIcon.Location;
 
             //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            Assert.True(changedLocations, "The selected icon did not change locations.");
+            Assert.True(oldPosition != newPosition, "The selected icon did not change locations.");
         }
 
         public void DragBottomIcon_CursorStyleTab()
         {
             //Go to cursor style tab.
             Driver.FindElement(By.Id("draggableExample-tab-cursorStyle")).Click();
+
+            //Find icon to be dragged, along with its location, and store them. Then create instance of Actions.
             var targetIcon = Driver.FindElement(By.Id("cursorBottom"));
             var targetLocation = Driver.FindElement(By.Id("cursorTopLeft")); //Have to use this element as target location as putting in a valid offset is throwing out of bounds error.
-            var currentPosition = targetIcon.Location;
+            var oldPositon = targetIcon.Location;
             Actions action = new Actions(Driver);
 
+            //Drag target icon to new location and store its location.
             action.DragAndDrop(targetIcon, targetLocation);
             action.Perform();
             var newPosition = targetIcon.Location;
 
             //Check dragging of icon is working as intended.
-            bool changedLocations = (currentPosition != newPosition);
-            Assert.True(changedLocations, "The selected icon did not change locations.");
+            Assert.True(oldPositon != newPosition, "The selected icon did not change locations.");
         }
     }
 }

@@ -43,6 +43,7 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         private readonly string url = "https://demoqa.com/droppable";
         private readonly string mainHeader = "Droppable";
 
+        //Use when WebDriverWait is needed.
         private WebDriverWait Wait()
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
@@ -70,6 +71,8 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 
         public void DropIcon_SimpleTab()
         {
+
+            //Find target icon and drop box. Then create instance of Actions.
             var icon = Driver.FindElement(By.Id("draggable"));
             var dropBox = Driver.FindElement(By.Id("droppable"));
             Actions action = new Actions(Driver);
@@ -85,6 +88,8 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         {
             //Switch to accept tab
             Driver.FindElement(By.Id("droppableExample-tab-accept")).Click();
+
+            //Find target icon and drop box. Then create instance of Actions.
             var icon = Driver.FindElement(By.Id("acceptable"));
             //Using XPath as the webdev gave each dropbox the same id...
             var dropBox = Driver.FindElement(By.XPath("//*[@id='acceptDropContainer']/div[@id='droppable']"));
@@ -101,6 +106,8 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         {
             //Switch to accept tab
             Driver.FindElement(By.Id("droppableExample-tab-accept")).Click();
+
+            //Find target icon and drop box. Then create instance of Actions.
             var icon = Driver.FindElement(By.Id("notAcceptable"));
             //Using XPath as the webdev gave dropbox the same id as the one on the simpletab.
             var dropBox = Driver.FindElement(By.XPath("//*[@id='acceptDropContainer']/div[@id='droppable']"));
@@ -117,6 +124,8 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         {
             //Switch to propogation tab
             Driver.FindElement(By.Id("droppableExample-tab-preventPropogation")).Click();
+
+            //Find target icon and drop boxes. Then create instance of Actions.
             var icon = Driver.FindElement(By.Id("dragBox"));
             var outerDropBox = Driver.FindElement(By.Id("greedyDropBox"));
             var innerDropBox = Driver.FindElement(By.Id("greedyDropBoxInner"));
@@ -136,6 +145,8 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         {
             //Switch to propogation tab
             Driver.FindElement(By.Id("droppableExample-tab-preventPropogation")).Click();
+
+            //Find target icon and drop boxes. Then create instance of Actions.
             var icon = Driver.FindElement(By.Id("dragBox"));
             var outerDropBox = Driver.FindElement(By.Id("notGreedyDropBox"));
             var innerDropBox = Driver.FindElement(By.Id("notGreedyInnerDropBox"));
@@ -156,9 +167,10 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         {
             //Switch to revert tab
             Driver.FindElement(By.Id("droppableExample-tab-revertable")).Click();
+
+            //Find target icon, its location, and drop box. Then create instance of Actions.
             var icon = Driver.FindElement(By.Id("revertable"));
-            //Used to confirm that the icon reverts to original location.
-            var position = icon.Location;
+            var defaultPosition = icon.Location;
             //Using XPath as the webdev gave dropbox the same id as the one on the simpletab.
             var dropBox = Driver.FindElement(By.XPath("//*[@id='revertableDropContainer']/div[@id='droppable']"));
             Actions action = new Actions(Driver);
@@ -167,41 +179,35 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             action.DragAndDrop(icon, dropBox);
             action.Perform();
 
-            //Wait for travel animation to finish.
-            Wait().Until((d) => icon.Location == position);
-            //Used to confirm icon reverts to original location.
+            //Wait for travel animation to finish and stor the icons location.
+            Wait().Until((d) => icon.Location == defaultPosition);
             var newPosition = icon.Location;           
 
-            //Validation.
-            bool wasDropped = (dropBox.Text == "Dropped!");
-            bool didRevert = (position == newPosition);
-            Assert.True(wasDropped, "The selected icon was not dropped.");
-            Assert.True(didRevert, "The selected icon did not revert to its original location.");
+            //Validate that the icon was dragged to the drop box and then returned to its original location.
+            Assert.True(dropBox.Text == "Dropped!", "The selected icon was not dropped.");
+            Assert.True(newPosition == defaultPosition, "The selected icon did not revert to its original location.");
         }
 
         public void DropNonRevertIcon_RevertTab()
         {
             //Switch to revert tab
             Driver.FindElement(By.Id("droppableExample-tab-revertable")).Click();
+
+            //Find target icon, its location, and drop box. Then create instance of Actions.
             var icon = Driver.FindElement(By.Id("notRevertable"));
-            //Used to confirm that the icon reverts to original location.
-            var position = icon.Location;
+            var oldPosition = icon.Location;
             //Using XPath as the webdev gave dropbox the same id as the one on the simpletab.
             var dropBox = Driver.FindElement(By.XPath("//*[@id='revertableDropContainer']/div[@id='droppable']"));
             Actions action = new Actions(Driver);
 
-            //Drag icon to dropbox.
+            //Drag icon to dropbox and store icon's location.
             action.DragAndDrop(icon, dropBox);
             action.Perform();
-
-            //Used to confirm icon reverts to original location.
             var newPosition = icon.Location;
 
-            //Validation.
-            bool wasDropped = (dropBox.Text == "Dropped!");
-            bool didNotRevert = (position != newPosition);
-            Assert.True(wasDropped, "The selected icon was not dropped.");
-            Assert.True(didNotRevert, "The selected icon reverted to its original location. It should have remained in drop box.");
+            //Validate the icon was dropped into box and that it didn't revert to original location.
+            Assert.True(dropBox.Text == "Dropped!", "The selected icon was not dropped.");
+            Assert.True(oldPosition != newPosition, "The selected icon reverted to its original location. It should have remained in drop box.");
         }
     }
 }

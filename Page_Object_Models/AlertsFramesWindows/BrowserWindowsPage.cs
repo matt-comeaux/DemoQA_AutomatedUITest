@@ -33,6 +33,7 @@ using System;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
@@ -69,47 +70,41 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         
         public void ClickButton_NewTab()
         {
+            //Click new tab button, create collection of all tabs, switch to tab and store its data in a variable.
             Driver.FindElement(By.Id("tabButton")).Click();
             ReadOnlyCollection<String> allTabs = Driver.WindowHandles;
-            var tabCreatedOnButtonClick = allTabs[1]; 
-            var createdTab = Wait().Until((d) => Driver.SwitchTo().Window(tabCreatedOnButtonClick));
+            var createdTab = Driver.SwitchTo().Window(allTabs[1]);
 
-            bool loadProperly = (createdTab.Url == "https://demoqa.com/sample" && Driver.FindElement(By.Id("sampleHeading")).Text == "This is a sample page");
-            if (!loadProperly)
-            {
-                throw new Exception($"The button with id of: 'tabButton' did not open the correct tab.");
-            }
-            
+            //Assert correct tab was created on button click.
+            var pageHeader = Driver.FindElement(By.Id("sampleHeading")).Text;
+            Assert.True(createdTab.Url == "https://demoqa.com/sample", "The button with id of: 'tabButton' did not open to the correct url.");
+            Assert.True(pageHeader == "This is a sample page", "The button with id of: 'tabButton' did not open to the page with the correct heading.");
         }
 
         public void ClickButton_NewWindow()
         {
+            //Click new window button, create collection of all windows, switch to created window and store its data in a variable.
             Driver.FindElement(By.Id("windowButton")).Click();
             ReadOnlyCollection<String> allWindows = Driver.WindowHandles;
-            var createdWindow = allWindows[1];
-            var newWindow = Wait().Until((d) => Driver.SwitchTo().Window(createdWindow));
-            
-            bool loadProperly = ( newWindow.Url == "https://demoqa.com/sample" && Driver.FindElement(By.Id("sampleHeading")).Text == "This is a sample page");
-            if (!loadProperly)
-            {
-                throw new Exception($"The button with id of: 'windowButton' did not open the correct window.");
-            }
+            var createdWindow = Driver.SwitchTo().Window(allWindows[1]);
+
+            //Verify the window loaded to the correct page.
+            Assert.True(createdWindow.Url == "https://demoqa.com/sample", "The button with id of: 'windowButton' did not open the correct window.");
+            Assert.True(Driver.FindElement(By.Id("sampleHeading")).Text == "This is a sample page", "The button with id of: 'windowButton' did not open the correct window.");
         }
 
         public void ClickButton_NewWindowMessage()
         {
+            //Store current window Id and click new window message button. 
             var mainWindowHandle = Driver.CurrentWindowHandle;
             Driver.FindElement(By.Id("messageWindowButton")).Click();
-            ReadOnlyCollection<String> allWindows = Driver.WindowHandles;
-            var windowMessage = Wait().Until((d) => Driver.SwitchTo().Window(allWindows[1]));
 
-            var windowMessageHandle = windowMessage.CurrentWindowHandle;
-            bool loadWindowMessage = (mainWindowHandle != windowMessageHandle);
-            if (!loadWindowMessage)
-            {
-                throw new Exception($"The message window failed to load.");
-            }
-            
+            //create collection of all windows, switch to created window message and store its data in a variable.
+            ReadOnlyCollection<String> allWindows = Driver.WindowHandles;
+            var windowMessage = Driver.SwitchTo().Window(allWindows[1]);
+
+            //Validate window message appeared.
+            Assert.True(windowMessage.CurrentWindowHandle != mainWindowHandle, "The message window failed to load.");
         }
 
     }

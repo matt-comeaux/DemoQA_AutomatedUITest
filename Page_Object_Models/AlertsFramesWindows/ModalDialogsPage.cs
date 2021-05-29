@@ -32,6 +32,7 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
@@ -68,32 +69,32 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 
         public void SelectSmallModal()
         {
+            //Click show small modal button, wait for it to appear, store header and body text.
             Driver.FindElement(By.Id("showSmallModal")).Click();
             var modal = Wait().Until((d) => Driver.FindElement(By.ClassName("modal-content")));
             var modalHeader = Driver.FindElement(By.Id("example-modal-sizes-title-sm")).Text;
             var modalText = Driver.FindElement(By.ClassName("modal-body")).Text;
 
-            bool modalLoaded = (modalHeader == "Small Modal" && modalText == "This is a small modal. It has very less content");
-            if (!modalLoaded)
-            {
-                throw new Exception($"The small modal did not load properly on button click.");
-            }
+            //Validate small modal.
+            Assert.True(modalHeader == "Small Modal", "The small modal did not load properly on button click.");
+            Assert.True(modalText == "This is a small modal. It has very less content", "The small modal did not load properly on button click.");
 
             //TODO: Verify close button works.
         }
 
         public void SelectLargeModal()
         {
+            //Click show large modal button, wait for it to appear, store header and body text.
             Driver.FindElement(By.Id("showLargeModal")).Click();
             var modal = Wait().Until((d) => Driver.FindElement(By.ClassName("modal-content")));
             var modalHeader = Driver.FindElement(By.Id("example-modal-sizes-title-lg")).Text;
             var modalText = Driver.FindElement(By.ClassName("modal-body")).Text;
 
-            bool modalLoaded = (modalHeader == "Large Modal" && modalText == "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-            if (!modalLoaded)
-            {
-                throw new Exception($"The large modal did not load properly on button click.");
-            }
+            //Storing expected modal text in own variable as it is very long.
+            var expectedModalText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+            //Validate large modal.
+            Assert.True(modalHeader == "Large Modal", "The large modal did not load properly on button click.");
+            Assert.True(modalText == expectedModalText, "The large modal did not load properly on button click.");
 
             //TODO: Verify close button works.
         }

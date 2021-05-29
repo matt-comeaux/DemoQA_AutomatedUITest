@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
@@ -62,26 +63,22 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 
         public void SelectFrame_Frame1()
         {
+            //Switch to frame1 and store its text in a variable.
             var frame = Driver.SwitchTo().Frame("frame1");
             var frameText = frame.FindElement(By.XPath("/html/body/h1")).Text;
 
-            bool frameExist = (frameText == "This is a sample page");
-            if (!frameExist)
-            {
-                throw new Exception($"The targeted frame does not exist, or did not load properly");
-            }
+            //Validate frame.
+            Assert.True(frameText == "This is a sample page", "The targeted frame does not exist, or did not load properly");
         }
 
         public void SelectFrame_Frame2()
         {
+            //Switch to frame2 and store its text in a variable.
             var frame = Driver.SwitchTo().Frame("frame2");
             var frameText = frame.FindElement(By.XPath("/html/body/h1")).Text;
 
-            bool frameExist = (frameText == "This is a sample page");
-            if (!frameExist)
-            {
-                throw new Exception($"The targeted frame does not exist, or did not load properly");
-            }
+            //Validate frame.
+            Assert.True(frameText == "This is a sample page", "The targeted frame does not exist, or did not load properly");
         }
     }
 }

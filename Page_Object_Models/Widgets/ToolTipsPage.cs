@@ -31,6 +31,9 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 {
@@ -40,6 +43,13 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/tool-tips";
         private readonly string mainHeader = "Tool Tips";
 
+        //Use when waits are needed.
+        private WebDriverWait Wait()
+        {
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+        }
+
+        //Creates instance of POM.
         public ToolTipsPage(IWebDriver driver)
         {
             this.Driver = driver;
@@ -58,6 +68,66 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             {
                 throw new Exception($"The requested page did not load correctly. The page url is: '{url}' The page source is: \r\n '{Driver.PageSource}'");
             }
+        }
+
+        public void DisplayToolTip_HoverOverButton()
+        {
+            var button = Driver.FindElement(By.Id("toolTipButton"));
+            Actions action = new Actions(Driver);
+
+            //Hover over button and wait for tool tip to display.
+            action.MoveToElement(button);
+            action.Perform();
+            Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
+
+            //Verify tool tip.
+            var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
+            Assert.True(toolTip.Text == "You hovered over the Button");
+        }
+
+        public void DisplayToolTip_HoverOverField()
+        {
+            var button = Driver.FindElement(By.Id("toolTipTextField"));
+            Actions action = new Actions(Driver);
+
+            //Hover over button and wait for tool tip to display.
+            action.MoveToElement(button);
+            action.Perform();
+            Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
+
+            //Verify tool tip.
+            var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
+            Assert.True(toolTip.Text == "You hovered over the text field");
+        }
+
+        public void DisplayToolTip_ContraryLink()
+        {
+            var link = Driver.FindElement(By.Id("texToolTopContainer")).FindElement(By.LinkText("Contrary"));
+            Actions action = new Actions(Driver);
+
+            //Hover over button and wait for tool tip to display.
+            action.MoveToElement(link);
+            action.Perform();
+            Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
+
+            //Verify tool tip.
+            var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
+            Assert.True(toolTip.Text == "You hovered over the Contrary");
+        }
+
+        public void DisplayToolTip_SectionLink()
+        {
+            var link = Driver.FindElement(By.Id("texToolTopContainer")).FindElement(By.LinkText("1.10.32"));
+            Actions action = new Actions(Driver);
+
+            //Hover over button and wait for tool tip to display.
+            action.MoveToElement(link);
+            action.Perform();
+            Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
+
+            //Verify tool tip.
+            var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
+            Assert.True(toolTip.Text == "You hovered over the 1.10.32");
         }
     }
 }

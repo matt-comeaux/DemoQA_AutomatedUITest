@@ -64,7 +64,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DelayHelper.cs" />
     <Compile Include="Test_Classes\AlertsFramesWindowsPages_Tests\DemoQA_AlertsPageShould.cs" />
     <Compile Include="Test_Classes\AlertsFramesWindowsPages_Tests\DemoQA_BrowserWindowsPageShould.cs" />
     <Compile Include="Test_Classes\AlertsFramesWindowsPages_Tests\DemoQA_FramesPageShould.cs" />
@@ -142,9 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

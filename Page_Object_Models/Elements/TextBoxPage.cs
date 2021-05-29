@@ -32,6 +32,7 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -41,20 +42,26 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly string url = "https://demoqa.com/text-box";
         private readonly string mainHeader = "Text Box";
 
+        //Use when WebDriverWait is needed.
         private WebDriverWait Wait()
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
         }
+
+        //Creates instance of POM.
         public TextBoxPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads the page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validates the page was loaded correctly.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -67,68 +74,52 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 
         public void SubmitValidForm()
         {
-            var name = "John Wick";
-            var email = "Random@random.com";
-            var currentAddress = "123 No Where Fast";
-            var permanentAddress = "123 Super Secret Hideout";
+            //Store inputs
+            const string name = "John Wick";
+            const string email = "Random@random.com";
+            const string currentAddress = "123 No Where Fast";
+            const string permanentAddress = "123 Super Secret Hideout";
 
-            //Fill Out Form
+            //Fill out form and submit.
             Driver.FindElement(By.Id("userName")).SendKeys(name);
             Driver.FindElement(By.Id("userEmail")).SendKeys(email);
             Driver.FindElement(By.Id("currentAddress")).SendKeys(currentAddress);
             Driver.FindElement(By.Id("permanentAddress")).SendKeys(permanentAddress);
-            //Submit Form
             Driver.FindElement(By.Id("submit")).Click();
+
             //Wait for verification table.
             Wait().Until((d) => Driver.FindElement(By.Id("name")));
 
             //Verify results match submission.
             bool nameCorrect = (Driver.FindElement(By.Id("name")).Text == "Name:" + name);
-            //WebDev used same id as text box. Using Xpath.
-            bool emailCorrect = (Driver.FindElement(By.XPath("//*[@id='output']/div/p[2]")).Text == "Email:" + email);
-            //WebDev used same id as text box. Using Xpath.
-            bool currentAddressCorrect = (Driver.FindElement(By.XPath("//*[@id='output']/div/p[3]")).Text == "Current Address :" + currentAddress);
-            //WebDev used same id as text box. Using Xpath.
-            bool permanentAddressCorrect = (Driver.FindElement(By.XPath("//*[@id='output']/div/p[4]")).Text == "Permananet Address :" + permanentAddress);
+            bool emailCorrect = (Driver.FindElement(By.XPath("//*[@id='output']/div/p[2]")).Text == "Email:" + email); //WebDev used same id as text box. Using Xpath.
+            bool currentAddressCorrect = (Driver.FindElement(By.XPath("//*[@id='output']/div/p[3]")).Text == "Current Address :" + currentAddress); //WebDev used same id as text box. Using Xpath.
+            bool permanentAddressCorrect = (Driver.FindElement(By.XPath("//*[@id='output']/div/p[4]")).Text == "Permananet Address :" + permanentAddress); //WebDev used same id as text box. Using Xpath.
 
-            if (!nameCorrect)
-            {
-                throw new Exception($"The name: '{name}' was not validated properly");
-            }
-            else if (!emailCorrect)
-            {
-                throw new Exception($"The email: '{email}' was not validated properly");
-            }
-            else if (!currentAddressCorrect)
-            {
-                throw new Exception($"The current address: '{currentAddress}' was not validated properly");
-            }
-            else if (!permanentAddressCorrect){
-                throw new Exception($"The permanent address: '{permanentAddress}' was not validated properly");
-            }
+            Assert.True(nameCorrect, "The name: " + name + " was not validated properly");
+            Assert.True(emailCorrect, "The email: " + email + " was not validated properly");
+            Assert.True(currentAddressCorrect, "The current address: " + currentAddress + " was not validated properly");
+            Assert.True(permanentAddressCorrect, "The permanent address: " + permanentAddress + " was not validated properly");
         }
 
 
         public void VerifyInvalidFormsAreNotSubmitted()
         {
-            var name = "John Wick";
-            var email = "R"; //invalid email
-            var currentAddress = "123 No Where Fast";
-            var permanentAddress = "123 Super Secret Hideout";
+            //Store inputs
+            const string name = "John Wick";
+            const string email = "R"; //invalid email
+            const string currentAddress = "123 No Where Fast";
+            const string permanentAddress = "123 Super Secret Hideout";
 
-            //Fill Out Form
+            //Fill out form and attempt to submit.
             Driver.FindElement(By.Id("userName")).SendKeys(name);
             Driver.FindElement(By.Id("userEmail")).SendKeys(email);
             Driver.FindElement(By.Id("currentAddress")).SendKeys(currentAddress);
             Driver.FindElement(By.Id("permanentAddress")).SendKeys(permanentAddress);
-            //Submit Form
             Driver.FindElement(By.Id("submit")).Click();
-            //Check that form was not submitted
-            bool submissionStopped = Driver.FindElement(By.ClassName("field-error")).Displayed;
-            if (!submissionStopped)
-            {
-                throw new Exception($"A form with an invalid email was allowed to be submitted.");
-            }
+
+            //Verify that the form was NOT submitted.
+            Assert.True(Driver.FindElement(By.ClassName("field-error")).Displayed, "A form with an invalid email was allowed to be submitted.");
         }
     }
 }

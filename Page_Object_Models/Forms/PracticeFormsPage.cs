@@ -83,7 +83,7 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Forms
             const string state = "Haryana";
             const string city = "Karnal";
             
-            //Enter form info and submit
+            //Enter form info and submit.
             Driver.FindElement(By.Id("firstName")).SendKeys(firstName);
             Driver.FindElement(By.Id("lastName")).SendKeys(lastname);
             Driver.FindElement(By.Id("userEmail")).SendKeys(email);
@@ -105,7 +105,7 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Forms
             Wait(5).Until((d) => Driver.FindElement(By.Id("react-select-4-option-0"))).Click();
             Driver.FindElement(By.Id("submit")).Click();
 
-            //Collect Submitted Form Info
+            //Collect submitted form info.
             Wait(5).Until((d) => Driver.FindElement(By.Id("example-modal-sizes-title-lg"))); //Wait until submitted results are displayed.
             var studentNameValue = 
                 Driver.FindElement(By.XPath("/html/body/div[3]/div/div/div[2]/div/table/tbody/tr[1]/td[2]")).Text;

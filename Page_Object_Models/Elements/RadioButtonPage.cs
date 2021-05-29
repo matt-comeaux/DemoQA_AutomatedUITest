@@ -33,6 +33,7 @@ using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -42,21 +43,26 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly string url = "https://demoqa.com/radio-button";
         private readonly string mainHeader = "Radio Button";
 
+        //Use when WebDriverWait is needed.
         private WebDriverWait Wait()
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
         }
 
+        //Creates instance of POM.
         public RadioButtonPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validates that page loaded correctly.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -69,37 +75,33 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 
         public void SelectRadioButton_Yes()
         {
+            //Click radio button and store the response.
             //For some reason the label for the radio button is programmed in such a way that it blocks Selenium from clicking button normally.
             Driver.ExecuteJavaScript("document.getElementById('yesRadio').click()");
             var clickConfirmation = Wait().Until((d) => Driver.FindElement(By.ClassName("text-success")).Text);
-            bool isWorking = (clickConfirmation == "Yes");
-            if (!isWorking)
-            {
-                throw new Exception($"The selected radio button is no longer working");
-            }
+
+            //Validate radio button was selected.
+            Assert.True(clickConfirmation == "Yes", "The selected radio button is no longer working");
         }
 
         public void SelectRadioButton_Impressive()
         {
+            //Click radio button and store the response.
             //For some reason the label for the radio button is programmed in such a way that it blocks Selenium from clicking button normally.
             Driver.ExecuteJavaScript("document.getElementById('impressiveRadio').click()");
             var clickConfirmation = Wait().Until((d) => Driver.FindElement(By.ClassName("text-success")).Text);
-            bool isWorking = (clickConfirmation == "Impressive");
-            if (!isWorking)
-            {
-                throw new Exception($"The selected radio button is no longer working");
-            }
+
+            //Validate radio button was selected.
+            Assert.True(clickConfirmation == "Impressive", "The selected radio button is no longer working");
         }
 
         public void SelectRadioButton_No()
         {
             //This radio button should be disabled.
             var radioButtonStatus = Driver.FindElement(By.Id("noRadio")).GetAttribute("disabled");
-            bool isDisabled = (radioButtonStatus == "true"); //True must be lower-case.
-            if (!isDisabled)
-            {
-                throw new Exception($"The referenced radio button with the id of 'noRadio' '{radioButtonStatus}' is no longer disabled.");
-            }
+
+            //Validate radio button is disabled. True must be lower-case.
+            Assert.True(radioButtonStatus == "true", "The referenced radio button with the id of 'noRadio' is no longer disabled.");
         }
     }
 }

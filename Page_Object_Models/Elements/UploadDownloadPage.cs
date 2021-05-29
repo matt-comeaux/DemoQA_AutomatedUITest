@@ -34,6 +34,8 @@ using OpenQA.Selenium;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
+
+    //Only doing smoke test as I don't want to trust my, or your, computer files to this webpage.
     class UploadDownloadPage
     {
         private readonly IWebDriver Driver;

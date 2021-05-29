@@ -33,6 +33,7 @@ using System;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 {
@@ -69,22 +70,19 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
 
         public void SelectAllFiles()
         {
+            //Select all files and wait for confirmation message to appear.
             var selectAllFilesButton = Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/div/ol/li/span/label/span[1]"));
             selectAllFilesButton.Click();
             var results = Wait().Until((d) => Driver.FindElements(By.ClassName("text-success")));
 
-            //Must maintain current order.
+            //Store the expected results. These must be in order of selection.
             string[] expectedResults = 
                 { "home","desktop","notes","commands","documents","workspace","react","angular","veu","office","public","private","classified","general","downloads","wordFile","excelFile" };
 
-
+            //Validate results.
             for (int i = 0; i < expectedResults.Length; i++)
             {
-                bool loaded = (expectedResults[i] == results[i].Text);
-                if (!loaded)
-                {
-                    throw new Exception($"The file/folder: '{expectedResults[i]}' did not load.");
-                }
+                Assert.True(expectedResults[i] == results[i].Text, "The file/folder: " + expectedResults[i] + " did not load.");
             }
         }
     }

@@ -58,7 +58,7 @@ namespace AutomatedUITest_DemoQA.Test_Classes.InteractionPages_Tests
             {
                 var draggablePage = new DraggablePage(driver);
                 draggablePage.LoadPage();
-                draggablePage.DragXAxis_AccessRestrictedTab();
+                draggablePage.DragXAxis_AxisRestrictedTab();
             }
         }
 
@@ -69,7 +69,7 @@ namespace AutomatedUITest_DemoQA.Test_Classes.InteractionPages_Tests
             {
                 var draggablePage = new DraggablePage(driver);
                 draggablePage.LoadPage();
-                draggablePage.DragYAxis_AccessRestrictedTab();
+                draggablePage.DragYAxis_AxisRestrictedTab();
             }
         }
 

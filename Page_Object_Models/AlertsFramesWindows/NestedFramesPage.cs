@@ -31,6 +31,7 @@ SOFTWARE.
 
 using System;
 using OpenQA.Selenium;
+using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 {
@@ -62,27 +63,23 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
 
         public void SelectParentFrame()
         {
+            //Switch to parent and store its body text in a variable.
             var parentFrame = Driver.SwitchTo().Frame("frame1");
             var parentFrameText = parentFrame.FindElement(By.XPath("/html/body")).Text;
 
-            bool frameExist = (parentFrameText == "Parent frame");
-            if (!frameExist)
-            {
-                throw new Exception($"The parent frame does not exists");
-            }
+            //Validate parent frame.
+            Assert.True(parentFrameText == "Parent frame", "The parent frame does not exists");
         }
 
         public void SelectChildFrame()
         {
+            //Switch to child frame and store its body text in a variable.
             var parentFrame = Driver.SwitchTo().Frame("frame1");
             var childFrame = parentFrame.SwitchTo().Frame(0);
             var childFrameText = childFrame.FindElement(By.XPath("/html/body/p")).Text;
 
-            bool frameExist = (childFrameText == "Child Iframe");
-            if (!frameExist)
-            {
-                throw new Exception($"The child frame does not exists.");
-            }
+            //Validate child frame.
+            Assert.True(childFrameText == "Child Iframe", "The child frame does not exists.");
         }
     }
 }

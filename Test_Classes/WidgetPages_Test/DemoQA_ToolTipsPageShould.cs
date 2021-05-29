@@ -38,7 +38,50 @@ using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test
 {
-    class DemoQA_ToolTipsPageShould
+    public class DemoQA_ToolTipsPageShould
     {
+        [Fact]
+        public void DisplayToolTipOnHover_HoverOverButton()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var toolTipPage = new ToolTipsPage(driver);
+                toolTipPage.LoadPage();
+                toolTipPage.DisplayToolTip_HoverOverButton();
+            }
+        }
+
+        [Fact]
+        public void DisplayToolTipOnHover_HoverOverField()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var toolTipPage = new ToolTipsPage(driver);
+                toolTipPage.LoadPage();
+                toolTipPage.DisplayToolTip_HoverOverField();
+            }
+        }
+
+        [Fact]
+        public void DisplayToolTipOnHover_ContraryLink()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var toolTipPage = new ToolTipsPage(driver);
+                toolTipPage.LoadPage();
+                toolTipPage.DisplayToolTip_ContraryLink();
+            }
+        }
+
+        [Fact]
+        public void DisplayToolTipOnHover_SectionLink()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var toolTipPage = new ToolTipsPage(driver);
+                toolTipPage.LoadPage();
+                toolTipPage.DisplayToolTip_SectionLink();
+            }
+        }
     }
 }
