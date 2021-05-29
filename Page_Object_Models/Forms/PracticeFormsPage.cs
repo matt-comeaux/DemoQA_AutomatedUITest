@@ -43,22 +43,26 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Forms
         private readonly string url = "https://demoqa.com/automation-practice-form";
         private readonly string mainHeader = "Practice Form";
 
-        //Use for waits.
+        //Use whenever WebDriverWait is needed.
         private WebDriverWait Wait(int seconds)
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(seconds));
         }
 
+        //Creates instance of POM.
         public PracticeFormsPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

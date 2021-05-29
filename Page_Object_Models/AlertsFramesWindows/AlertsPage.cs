@@ -42,22 +42,27 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         private readonly IWebDriver Driver;
         private readonly string url = "https://demoqa.com/alerts";
         private readonly string mainHeader = "Alerts";
+
+        //Use whenever WebDriverWait is needed.
         private WebDriverWait Wait()
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
         }
 
+        //Creates instance of POM.
         public AlertsPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
 
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

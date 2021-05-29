@@ -41,16 +41,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         private readonly string url = "https://demoqa.com/nestedframes";
         private readonly string mainHeader = "Nested Frames";
 
+        //Creates instance of POM.
         public NestedFramesPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

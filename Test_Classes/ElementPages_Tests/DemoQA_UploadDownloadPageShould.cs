@@ -29,13 +29,12 @@ SOFTWARE.
 
  */
 
-using System;
 using AutomatedUITest_DemoQA.Page_Object_Models.Elements;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support;
 using Xunit;
 
+//Not using as I don't want to trust computer files to website.
 namespace AutomatedUITest_DemoQA.Test_Classes.ElementPages_Tests
 {
     class DemoQA_UploadDownloadPageShould

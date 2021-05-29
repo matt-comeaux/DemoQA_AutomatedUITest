@@ -29,11 +29,9 @@ SOFTWARE.
 
  */
 
-using System;
 using AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support;
 using Xunit;
 
 

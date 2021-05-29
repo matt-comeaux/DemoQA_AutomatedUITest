@@ -41,16 +41,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly string url = "https://demoqa.com/broken";
         private readonly string mainHeader = "Broken Links - Images";
 
+        //Creates instance of POM.
         public BrokenLinksPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
-
+        
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

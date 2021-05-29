@@ -29,11 +29,9 @@ SOFTWARE.
 
  */
 
-using System;
 using AutomatedUITest_DemoQA.Page_Object_Models.Widgets;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support;
 using Xunit;
 
 namespace AutomatedUITest_DemoQA.Test_Classes.WidgetPages_Test

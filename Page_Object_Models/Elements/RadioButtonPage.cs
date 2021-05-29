@@ -62,7 +62,7 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
             EnsurePageLoaded();
         }
 
-        //Validates that page loaded correctly.
+        //Validates that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

@@ -44,21 +44,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/select-menu";
         private readonly string mainHeader = "Select Menu";
 
-        private WebDriverWait Wait()
-        {
-            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-        }
-
+        //Create instance of POM.
         public SelectMenuPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Load page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -71,18 +70,17 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void SelectFrom_SelectValueField()
         {
-            //Select drop down menu
+            //Find select value field and click it to activate its drop down menu.
             var field = Driver.FindElement(By.Id("withOptGroup"));
             field.Click();
             
-            //Select value from drop down menu
-            var targetValue = Driver.FindElement(By.Id("react-select-2-option-0-0"));
+            //Select value from drop down menu. 
+            var targetValue = Driver.FindElement(By.Id("react-select-2-option-0-0")); //Group1, option 1
             targetValue.Click();
 
-            //Confirm correct value was selected
+            //Find field value and validate the correct option was chosen.
             var fieldValue = Driver.FindElement(By.ClassName("css-1uccc91-singleValue"));
-            bool valueCorrect = (fieldValue.Text == "Group 1, option 1");
-            Assert.True(valueCorrect, "The target value was not selected from the drop down menu");
+            Assert.True(fieldValue.Text == "Group 1, option 1", "The target value was not selected from the drop down menu");
         }
 
         public void SelectFrom_SelectOneField()
@@ -91,22 +89,22 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             //      This is because the id's for these two fields were dynamically generated for some reason.
             //      These are the only two fields like this on the entire page.
 
-            //Select drop down menu
+            //Find select one field and click it to activate its drop down menu.
             var field = Driver.FindElement(By.Id("selectOne"));
             field.Click();
 
-            //Select target value from drop down menu
+            //Select target value from drop down menu.
             var targetValue = Driver.FindElement(By.ClassName("css-1n7v3ny-option")); //Dr.
             targetValue.Click();
 
-            //Confirm correct value was selected
+            //Find field value and validate the correct option was chosen.
             var fieldValue = Driver.FindElement(By.XPath("/html/body/div/div/div/div[2]/div[2]/div[1]/div[4]/div/div/div/div[1]/div[1]"));
-            bool valueCorrect = (fieldValue.Text == "Dr.");
-            Assert.True(valueCorrect, "The target value was not selected from the drop down menu");
+            Assert.True(fieldValue.Text == "Dr.", "The target value was not selected from the drop down menu");
         }
 
         public void SelectFrom_OldStyleMenu()
         {
+            //Find old style menu and select the color 'yellow'.
             SelectElement field = new SelectElement(Driver.FindElement(By.Id("oldSelectMenu")));
             field.SelectByText("Yellow");
             
@@ -115,12 +113,14 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void SelectFrom_MultiSelectDropDown()
         {
+            //Find the multi select field. Send the colors blue and black.
             var field = Driver.FindElement(By.Id("react-select-4-input"));
             field.SendKeys("Blue");
             field.SendKeys(Keys.Enter);
             field.SendKeys("Black");
             field.SendKeys(Keys.Enter);
 
+            //Find field values and validate the correct values were selected from drop down.
             var fieldValues = Driver.FindElements(By.ClassName("css-12jo7m5"));
             for (int i = 0; i < fieldValues.Count; i++)
             {
@@ -131,7 +131,7 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void SelectFrom_StandardDropDown()
         {
-            //Select drop down menu
+            //Find the standard drop down menu and select the car 'volvo'.
             SelectElement field = new SelectElement(Driver.FindElement(By.Id("cars")));
             field.SelectByText("Volvo");
 

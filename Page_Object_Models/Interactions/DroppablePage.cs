@@ -43,22 +43,26 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         private readonly string url = "https://demoqa.com/droppable";
         private readonly string mainHeader = "Droppable";
 
-        //Use when WebDriverWait is needed.
+        //Use whenever WebDriverWait is needed.
         private WebDriverWait Wait()
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
         }
 
+        //Creates instance of POM.
         public DroppablePage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

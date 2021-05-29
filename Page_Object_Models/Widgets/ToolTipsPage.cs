@@ -43,23 +43,26 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/tool-tips";
         private readonly string mainHeader = "Tool Tips";
 
-        //Use when waits are needed.
+        //Use whenever WebDriverWait is needed.
         private WebDriverWait Wait()
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
         }
 
-        //Creates instance of POM.
+        //Create instance of POM.
         public ToolTipsPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Load page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -72,21 +75,23 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void DisplayToolTip_HoverOverButton()
         {
+            //Find hover over me button. Create instance of Actions.
             var button = Driver.FindElement(By.Id("toolTipButton"));
             Actions action = new Actions(Driver);
 
-            //Hover over button and wait for tool tip to display.
+            //Hover over target button and wait for tool tip to display.
             action.MoveToElement(button);
             action.Perform();
             Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
 
-            //Verify tool tip.
+            //Validate the tooltip appeared and is displaying correct message.
             var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
             Assert.True(toolTip.Text == "You hovered over the Button");
         }
 
         public void DisplayToolTip_HoverOverField()
         {
+            //Find hover over me field. Create instance of Actions.
             var button = Driver.FindElement(By.Id("toolTipTextField"));
             Actions action = new Actions(Driver);
 
@@ -95,37 +100,39 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
             action.Perform();
             Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
 
-            //Verify tool tip.
+            //Validate the tooltip appeared and is displaying correct message.
             var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
             Assert.True(toolTip.Text == "You hovered over the text field");
         }
 
         public void DisplayToolTip_ContraryLink()
         {
+            //Find the contrary link. Create instance of Actions.
             var link = Driver.FindElement(By.Id("texToolTopContainer")).FindElement(By.LinkText("Contrary"));
             Actions action = new Actions(Driver);
 
-            //Hover over button and wait for tool tip to display.
+            //Hover over link and wait for tool tip to display.
             action.MoveToElement(link);
             action.Perform();
             Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
 
-            //Verify tool tip.
+            //Validate the tooltip appeared and is displaying correct message.
             var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
             Assert.True(toolTip.Text == "You hovered over the Contrary");
         }
 
         public void DisplayToolTip_SectionLink()
         {
+            //Find the 1.10.32 link. Create instance of Actions.
             var link = Driver.FindElement(By.Id("texToolTopContainer")).FindElement(By.LinkText("1.10.32"));
             Actions action = new Actions(Driver);
 
-            //Hover over button and wait for tool tip to display.
+            //Hover over link and wait for tool tip to display.
             action.MoveToElement(link);
             action.Perform();
             Wait().Until((d) => Driver.FindElement(By.ClassName("tooltip-inner")).Text);
 
-            //Verify tool tip.
+            //Validate the tooltip appeared and is displaying correct message.
             var toolTip = Driver.FindElement(By.ClassName("tooltip-inner"));
             Assert.True(toolTip.Text == "You hovered over the 1.10.32");
         }

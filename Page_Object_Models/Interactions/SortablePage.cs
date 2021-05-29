@@ -32,7 +32,6 @@ SOFTWARE.
 using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
@@ -43,20 +42,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
         private readonly string url = "https://demoqa.com/sortable";
         private readonly string mainHeader = "Sortable";
 
-        private WebDriverWait Wait()
-        {
-            return new WebDriverWait(Driver,TimeSpan.FromSeconds(5));
-        }
+        //Creates instance of POM.
         public SortablePage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -69,11 +68,14 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
 
         public void SortItems_List()
         {
+            //Find list and its items.
             var listContainer = Driver.FindElement(By.Id("demo-tabpane-list"));
             var listItems = listContainer.FindElements(By.ClassName("list-group-item"));
 
+            //Reverse order of list.
             for (int i = 0; i < listItems.Count; i++)
             {
+                //Find text of the item in place i. Create instance of Actions.
                 var textOfItemsPlace = listItems[i].Text;
                 Actions action = new Actions(Driver);
                 
@@ -81,7 +83,7 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
                 action.DragAndDropToOffset(listItems[0], 15, 312);
                 action.Perform();
 
-                //Verify list was resorted.
+                //Verify list item was moved.
                 var newTextOfItemsPlace = listItems[i].Text;
                 bool wasResorted = (textOfItemsPlace != newTextOfItemsPlace);
                 Assert.True(wasResorted, "The selected list item number: " + i + " was not sorted");
@@ -97,17 +99,18 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Interactions
             var gridContainer = Driver.FindElement(By.Id("demo-tabpane-grid"));
             var gridItems = gridContainer.FindElements(By.ClassName("list-group-item"));
 
-            //Sort grid items
+            //Reverse order of grid items.
             for (int i = 0; i < gridItems.Count; i++)
             {
+                //Get text of item in place i. Create instance of Actions.
                 var textOfItemsPlace = gridItems[i].Text;
                 Actions action = new Actions(Driver);
 
-                //Drag each item to bottom of list.
+                //Drag each item to bottom of grid.
                 action.DragAndDropToOffset(gridItems[0], 235, 266);
                 action.Perform();
 
-                //Verify list was resorted.
+                //Verify grid item was moved.
                 var newTextOfItemsPlace = gridItems[i].Text;
                 bool wasResorted = (textOfItemsPlace != newTextOfItemsPlace);
                 Assert.True(wasResorted, "The selected grid item: " + gridItems[i].Text + " was not sorted");

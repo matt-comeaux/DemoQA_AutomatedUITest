@@ -41,16 +41,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         private readonly string url = "https://demoqa.com/frames";
         private readonly string mainHeader = "Frames";
 
+        //Create instance of POM.
         public FramesPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+        
+        //Load page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

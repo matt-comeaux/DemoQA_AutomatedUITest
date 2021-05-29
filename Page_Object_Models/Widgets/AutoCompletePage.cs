@@ -41,16 +41,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/auto-complete";
         private readonly string mainHeader = "Auto Complete";
 
+        //Create instance of POM.
         public AutoCompletePage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -63,35 +67,35 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void SelectMultipleColors()
         {
+            //Find multi-color input field, store input colors, and store expected colors after auto-complete.
             var input = Driver.FindElement(By.Id("autoCompleteMultipleInput"));
-            string[] colors = { "Re", "Blu", "Blac" }; //incomplete as the we are testing auto-complete
+            string[] inputColors = { "Re", "Blu", "Blac" }; //incomplete as the we are testing auto-complete
             string[] expectedColors = { "Red", "Blue","Black" }; //Should match order of colors array.
 
             //Enter partial color names and press enter.
-            for (int i = 0; i < colors.Length; i++)
+            for (int i = 0; i < inputColors.Length; i++)
             {
-                input.SendKeys(colors[i]);
+                input.SendKeys(inputColors[i]);
                 input.SendKeys(Keys.Enter);
             }
            
-            //Test that the colors were correctly auto-completed.
+            //Validate the partial color names were correctly auto-completed.
             var autoCompleteColors = Driver.FindElements(By.ClassName("auto-complete__multi-value__label"));
             for (int i = 0; i < autoCompleteColors.Count; i++)
             {
                 Assert.True(autoCompleteColors[i].Text == expectedColors[i], 
-                    "The color: " + expectedColors[i] + " was not properly auto completed when the following was typed" + colors[i]);
+                    "The color: " + expectedColors[i] + " was not properly auto completed when the following was typed" + inputColors[i]);
             }
         }
 
         public void SelectSingleColor()
         {
-            //Single color field
+            //Find single color input field, send partial input color name, press enter.
             var input = Driver.FindElement(By.Id("autoCompleteSingleInput"));
-            //Send partial color to single color field and hit enter.
             input.SendKeys("Blu");
             input.SendKeys(Keys.Enter);
 
-            //Check that the send color was auto completed correctly
+            //Validate that the partial color name was correctly auto-completed.
             bool wasAutoCompleted = (Driver.FindElement(By.ClassName("auto-complete__single-value")).Text == "Blue");
             Assert.True(wasAutoCompleted, "The color blue was not auto completed when 'blu' was typed.");
         }

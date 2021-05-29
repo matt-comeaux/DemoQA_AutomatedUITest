@@ -42,16 +42,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/accordian";
         private readonly string mainHeader = "Accordian";
 
+        //Creates instance of POM.
         public AccordianPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -64,14 +68,13 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void DisplayText_WhatIsTab()
         {
-            //Since this tab is alway open on load we close it before beginning test.
+            //Since this tab is alway open on load we must move to a new tab.
             Driver.FindElement(By.Id("section1Heading")).Click();
-            //Now we open the tab and verify the text is being displayed.
+            //Now we open the what is tab.
             Driver.FindElement(By.Id("section1Heading")).Click();
 
             //Verify text is displayed. Ignoring correctness for now as text is way too long.
             bool isDisplayed = (Driver.FindElement(By.Id("section1Content")).Enabled);
-
             Assert.True(isDisplayed, "The selected tab's text was not displayed.");
         }
         public void DisplayText_WhereDoesTab()

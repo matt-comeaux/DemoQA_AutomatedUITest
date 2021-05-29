@@ -42,21 +42,26 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.AlertsFramesWindows
         private readonly string url = "https://demoqa.com/modal-dialogs";
         private readonly string mainHeader = "Modal Dialogs";
 
+        //Use whenever WebDriverWait is needed.
         private WebDriverWait Wait()
         {
             return new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
         }
 
+        //Create instance of POM.
         public ModalDialogsPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validates that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

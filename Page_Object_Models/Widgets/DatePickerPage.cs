@@ -41,16 +41,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/date-picker";
         private readonly string mainHeader = "Date Picker";
 
+        //Create instance of POM.
         public DatePickerPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Load page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -63,14 +67,16 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void AutoSelect_SelectDateField()
         {
+            //Find date input field and store the unformated date we want to send it.
             var input = Driver.FindElement(By.Id("datePickerMonthYearInput"));
             var unformatedDate = "3/3/2007";
-            //Send incomplete date and click enter
+
+            //Send unformated date and press enter key.
             input.SendKeys(Keys.Control + "a"); //.Clear() will not work here.
             input.SendKeys(unformatedDate);
             input.SendKeys(Keys.Enter);
 
-            //Validate that date was auto selected from the sent unformated date.
+            //Validate that the correct date was auto-selected from the sent unformated date.
             var autoSelectedDate = input.GetAttribute("value");
             bool wasAutoCompleted = (autoSelectedDate == "03/03/2007");
             Assert.True(wasAutoCompleted, "The date 03/03/2007 was not auto selected when the text: " + unformatedDate + " was entered. The text output was: " + autoSelectedDate);
@@ -79,14 +85,16 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void AutoSelect_DateAndTimeField()
         {
+            //Find date-time input field and store the unformated date-time we want to send it.
             var input = Driver.FindElement(By.Id("dateAndTimePickerInput"));
             var unformatedDate = "3/3/2007 11:30";
-            //Send incomplete date and click enter
+
+            //Send unformated date-time and press enter.
             input.SendKeys(Keys.Control + "a"); //.Clear() will not work here.
             input.SendKeys(unformatedDate);
             input.SendKeys(Keys.Enter);
 
-            //Validate that date was auto selected from the sent unformated date.
+            //Validate that the correct date-time was auto-selected from the sent unformated date-time.
             var autoSelectedDate = input.GetAttribute("value");
             bool wasAutoCompleted = (autoSelectedDate == "March 3, 2007 11:30 AM");
             Assert.True(wasAutoCompleted, "The date March 3, 2007 11:30 AM was not auto selected when the text: " + unformatedDate + " was entered. The text output was: " + autoSelectedDate);

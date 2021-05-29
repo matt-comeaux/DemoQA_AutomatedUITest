@@ -42,16 +42,20 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Elements
         private readonly string url = "https://demoqa.com/upload-download";
         private readonly string mainHeader = "Upload and Download";
 
+        //Creates instance of POM.
         public UploadDownloadPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Loads Page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);

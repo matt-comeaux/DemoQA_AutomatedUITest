@@ -30,10 +30,8 @@ SOFTWARE.
  */
 
 using System;
-using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.Extensions;
 using Xunit;
 
 namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
@@ -44,16 +42,21 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
         private readonly string url = "https://demoqa.com/slider";
         private readonly string mainHeader = "Slider";
 
+
+        //Create instance of POM.
         public SliderPage(IWebDriver driver)
         {
             this.Driver = driver;
         }
+
+        //Load page.
         public void LoadPage()
         {
             Driver.Navigate().GoToUrl(url);
             EnsurePageLoaded();
         }
 
+        //Validate that the correct page loaded.
         public void EnsurePageLoaded()
         {
             bool isLoaded = (Driver.Url == url) && (Driver.FindElement(By.ClassName("main-header")).Text == mainHeader);
@@ -66,32 +69,35 @@ namespace AutomatedUITest_DemoQA.Page_Object_Models.Widgets
 
         public void Increase_Slider()
         {
+
+            //Find the slide and create an instance of Actions.
             var slider = Driver.FindElement(By.ClassName("range-slider"));
             Actions action = new Actions(Driver);
 
-            //Move slider
+            //Increase the slider.
             action.ClickAndHold(slider);
             action.MoveByOffset(50, 0);
             action.Release();
             action.Perform();
 
-            //Validate that sliders value increased
+            //Validate that sliders value increased.
             var sliderValue = Convert.ToInt32(slider.GetAttribute("value"));
             Assert.True(sliderValue > 25);
         }
 
         public void Decrease_Slider()
         {
+            //Find the slide and create an instance of Actions.
             var slider = Driver.FindElement(By.ClassName("range-slider"));
             Actions action = new Actions(Driver);
 
-            //Move slider
+            //Decrease the slider.
             action.ClickAndHold(slider);
             action.MoveByOffset(-75, 0);
             action.Release();
             action.Perform();
 
-            //Validate that sliders value increased
+            //Validate that sliders value decreased.
             var sliderValue = Convert.ToInt32(slider.GetAttribute("value"));
             Assert.True(sliderValue < 25);
         }
